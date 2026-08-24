@@ -11,6 +11,11 @@ npx zkills --version   # one-off
 npm i -g zkills        # global bin `zkills`
 ```
 
+## Maintainers
+
+- Run `npm` commands inside `packages/zkills`, never at the monorepo root
+- Root `devEngines` pins pnpm, npm refuses to run there
+
 ## Token for the bank
 
 - Private bank needs a GitHub token with repo read

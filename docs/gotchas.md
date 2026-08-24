@@ -29,6 +29,7 @@
 - `publishConfig.provenance` breaks local publish, provenance comes from trusted publishing in CI only
 - `bin` path without `./`, npm normalizes to `dist/cli.js`
 - Trusted publishing needs an existing package, first version is published by hand
+- WSL: npm web auth needs `BROWSER=wslview`, or `--auth-type=legacy` for a terminal OTP
 - New version pinned in bank CI only once it exists on npm
 
 ## YAML and GitHub

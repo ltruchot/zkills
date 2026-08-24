@@ -33,13 +33,11 @@
 - 3-way merge per file, see [update.md](update.md)
 - `--external` runs `npx skills update` after warning
 
-## remove <names...>
+## remove <names...>, check
 
-- Managed only: dir, lock entry, secrets, gitignore line
+- `remove` managed only: dir, lock entry, secrets, gitignore line
 
-## check
-
-- Exit 0 ok, 1 update or wrong ref, 2 drift or missing, 3 tamper
+- `check` exit 0 ok, 1 update or wrong ref, 2 drift or missing, 3 tamper
 - `--frozen` re-renders template with lock answers, mismatch = tamper
 - `--offline` skips bank fetch
 - Warns when `~/.claude/skills/<name>` shadows the project skill

@@ -26,13 +26,13 @@
 - `allowed-tools` with `*` or `Bash(*)`
 - `hooks` in frontmatter warns, scripts with URLs warn
 
-## Registry squatting
+## Registry
 
-- Public npm name `zkills` is unclaimed on purpose, we publish private only
-- Bare `npx zkills` resolves to public npm, never to our package
-- Always type `@gods-academy/zkills` or use the global bin
-- Machine without `~/.npmrc` scope line = dependency confusion risk
-- Reserve org `gods-academy` on npmjs.com, publish nothing there
+- `zkills` is public on npm, owned by ltruchot, name reserved
+- Package holds no secrets, no org name, no bank
+- Published by GitHub Actions through npm trusted publishing, provenance attached
+- Verify: `npm view zkills dist.attestations` or the provenance badge on npmjs.com
+- Banks stay private per org, reached with the caller's GitHub token
 
 ## Claude Code knobs
 

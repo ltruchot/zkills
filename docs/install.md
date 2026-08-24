@@ -1,33 +1,27 @@
 # Install
 
-## Registry
+## Package
 
-- Package `@gods-academy/zkills` lives on GitHub Packages, private
-- Scope routing goes in `~/.npmrc`, never in the repo
-
-```ini
-@gods-academy:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-## Token
-
-- Classic PAT with `read:packages`, or `gh auth refresh -s read:packages`
-- Export: `export GITHUB_TOKEN=$(gh auth token)`
-- Same token reads the private bank at runtime
-
-## Run
+- `zkills` on public npm, published from github.com/ltruchot/zkills
+- No secrets inside, the bank stays private
+- No `.npmrc`, no registry setup
 
 ```bash
-npx @gods-academy/zkills --version   # one-off
-npm i -g @gods-academy/zkills        # global bin `zkills`
+npx zkills --version   # one-off
+npm i -g zkills        # global bin `zkills`
 ```
+
+## Token for the bank
+
+- Private bank needs a GitHub token with repo read
+- Resolution: `ZKILLS_TOKEN` → `GH_TOKEN` → `GITHUB_TOKEN` → `gh auth token`
+- Logged-in `gh` is enough on a laptop
 
 ## First project
 
 ```bash
 cd my-repo
-zkills init                 # accept default bank or type owner/name
+zkills init my-org/skills   # bank repo, any org
 zkills add qa-pr            # answer placeholders one by one
 git add .claude zkills.config.json
 ```
@@ -38,9 +32,10 @@ git add .claude zkills.config.json
 ## CI
 
 ```yaml
-- run: npx --yes @gods-academy/zkills check --frozen
+- run: npx --yes zkills check --frozen
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-- Needs `packages: read` permission and package access for the repo
+- Same-org bank: grant the workflow read access to the bank repo, or use a PAT
+- Pin a version in CI: `npx --yes zkills@0.1.3`

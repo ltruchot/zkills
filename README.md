@@ -1,6 +1,6 @@
 # zkills
 
-- Claude-only skills manager for private org banks
+- Claude-only skills manager for private org banks, any GitHub org
 - Installs, updates, removes `SKILL.md` dirs in `.claude/skills/`
 - Placeholders `{{GITHUB_REPO}}` asked once per project, never seen as drift
 - Update = 3-way merge, local edits survive
@@ -9,7 +9,7 @@
 ## Install
 
 ```bash
-npm i -g @gods-academy/zkills   # needs ~/.npmrc, see docs/install.md
+npm i -g zkills   # or npx zkills
 ```
 
 ## Use

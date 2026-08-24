@@ -29,7 +29,7 @@ release. Add a tool name to select part of the graph. For example, run
 # zkills
 
 - Claude-only skills manager for private org banks
-- Two repos: this CLI, bank `Gods-Academy/skills`
+- Two repos: this CLI (`ltruchot/zkills`, npm `zkills`), reference bank `Gods-Academy/skills`
 - Plan: `~/.claude/plans/projet-100-en-anglais-typed-toucan.md`
 
 ## Rules

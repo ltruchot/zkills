@@ -10,14 +10,13 @@ import { ensureLines } from "../io/gitignore.ts";
 import { writeLock } from "../io/lock.ts";
 import { findRoot, paths } from "../io/paths.ts";
 import { cancelled } from "../io/prompts/confirm.ts";
-import { info, intro, note, outro } from "../io/ui.ts";
+import { fail, info, intro, note, outro } from "../io/ui.ts";
 import type { GlobalOpts } from "./context.ts";
 
-export const DEFAULT_BANK = "Gods-Academy/skills";
-
+// Bank repo comes from the arg or a prompt, never a built-in default
 async function askRepo(yes: boolean): Promise<string> {
-  if (yes) return DEFAULT_BANK;
-  const value = await text({ message: "Bank repo (owner/name)", initialValue: DEFAULT_BANK });
+  if (yes) fail("name the bank repo: zkills init owner/skills");
+  const value = await text({ message: "Bank repo (owner/name)", placeholder: "my-org/skills" });
   if (isCancel(value)) cancelled();
   return value;
 }

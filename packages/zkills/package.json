@@ -1,11 +1,12 @@
 {
-  "name": "@gods-academy/zkills",
-  "version": "0.1.2",
-  "description": "Claude-only skills manager for private org banks",
+  "name": "zkills",
+  "version": "0.1.3",
+  "description": "Claude-only skills manager for private org banks, placeholders and drift-safe updates",
+  "homepage": "https://github.com/ltruchot/zkills#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gods-Academy/zkills.git"
+    "url": "git+https://github.com/ltruchot/zkills.git"
   },
   "bin": {
     "zkills": "./dist/cli.js"
@@ -15,7 +16,8 @@
   ],
   "type": "module",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "vp pack",

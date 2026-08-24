@@ -35,5 +35,6 @@
 ## YAML and GitHub
 
 - Never a bare `word:` inside an unquoted `name:` value
+- Actions with setup-vp: `pnpm` is not on PATH outside `vp run`, call `vp pm <cmd>`
 - Repo transfer is async, first push after may 403, retry
 - Actions of another repo cannot read a GitHub Packages package without a grant

@@ -25,7 +25,7 @@ jobs:
         working-directory: /tmp # root package.json pins pnpm via devEngines, npm refuses to run there
       - name: "pack with pnpm, resolves catalog versions"
         working-directory: packages/zkills
-        run: pnpm pack --pack-destination /tmp/pack
+        run: vp pm pack --pack-destination /tmp/pack # pnpm is not on PATH in Actions, vp forwards
       - name: "publish tarball, provenance automatic with trusted publishing"
         working-directory: packages/zkills
         run: npm publish /tmp/pack/zkills-*.tgz --access public

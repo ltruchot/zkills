@@ -8,7 +8,7 @@ const PKG = join(process.cwd(), "packages", "zkills");
 const out = mkdtempSync(join(tmpdir(), "zkills-pack-"));
 
 try {
-  execFileSync("pnpm", ["pack", "--pack-destination", out], { cwd: PKG, stdio: "ignore" });
+  execFileSync("vp", ["pm", "pack", "--pack-destination", out], { cwd: PKG, stdio: "ignore" });
   const tgz = readdirSync(out).find((f) => f.endsWith(".tgz"));
   if (tgz === undefined) throw new Error("no tarball produced");
   const manifest = execFileSync("tar", ["-xOf", join(out, tgz), "package/package.json"], {

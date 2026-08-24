@@ -20,5 +20,6 @@ export const OFF_STYLE: Record<string, "off"> = {
   "node/no-sync": "off", // sync fs in scripts and root lookup
   "eslint/no-inline-comments": "off", // reasons live next to config values
   "unicorn/switch-case-braces": "off", // two lines per case, 50-line law
+  "unicorn/number-literal-case": "off", // oxfmt lowercases hex digits
   "typescript/promise-function-async": "off", // fights require-await on thin wrappers
 };

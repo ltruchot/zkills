@@ -35,9 +35,8 @@ release. Add a tool name to select part of the graph. For example, run
 
 ## Rules
 
-- US English everywhere, telegraphic bullets, no narrative
+- US English, telegraphic bullets, sentences under 15 words
 - Every file under 50 lines, `vp run lines` enforces
-- Sentences under 15 words
 - No new dep without catalog pin, no `^`
 - `vp check` (no `--fix`) && `vp run lines` && `vp run -r test` && `vp run packcheck` green = done
 - Record every new friction in `docs/gotchas.md` the same turn

@@ -11,6 +11,7 @@
 - CI runs `vp check` without `--fix`, run that form before every push
 - `vp check --fix` hides rules that flip with oxfmt, e.g. `number-literal-case`
 - `vp run lines` after `vp check --fix`, reformat adds lines
+- Pre-commit hook runs `vp check --fix` only, `lines` and `packcheck` are on you before push
 - `vp lint --fix` toggles between contradicting rules, resolve with one exception + reason in `lint/off-*.ts`
 - `coverage/` must stay in `.gitignore` and `scripts/lines.ts` skip list
 

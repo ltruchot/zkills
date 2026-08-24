@@ -31,6 +31,7 @@ release. Add a tool name to select part of the graph. For example, run
 - Claude-only skills manager for private org banks
 - Two repos: this CLI (`ltruchot/zkills`, npm `zkills`), reference bank `Gods-Academy/skills`
 - Plan: `~/.claude/plans/projet-100-en-anglais-typed-toucan.md`
+- Frictions already met, read before lint, release or shell work: @docs/gotchas.md
 
 ## Rules
 
@@ -38,7 +39,8 @@ release. Add a tool name to select part of the graph. For example, run
 - Every file under 50 lines, `vp run lines` enforces
 - Sentences under 15 words
 - No new dep without catalog pin, no `^`
-- `vp check && vp run lines && vp test` green = done
+- `vp check` (no `--fix`) && `vp run lines` && `vp run -r test` && `vp run packcheck` green = done
+- Record every new friction in `docs/gotchas.md` the same turn
 - Never `git commit --no-verify`, never weaken lint
 - New lint exception = one line in `lint/off-*.ts` with a reason
 

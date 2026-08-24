@@ -46,4 +46,4 @@ zkills audit                # offline danger scan
 - [Auth](docs/auth.md) token chain, private repos
 - [Security](docs/security.md) threat model, audit rules, squatting
 - [Interop](docs/interop.md) skills.sh coexistence
-- [Testing](docs/testing.md), [Style](docs/style.md), [Philosophy](docs/philosophy.md)
+- [Testing](docs/testing.md), [Style](docs/style.md), [Philosophy](docs/philosophy.md), [Gotchas](docs/gotchas.md)

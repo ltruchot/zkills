@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import type { z } from "zod";
 import { stableJson } from "../core/lock/sort.ts";
@@ -19,5 +19,7 @@ export async function readJson<T>(
 
 export async function writeJson(file: string, value: unknown, mode = 0o644): Promise<void> {
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, stableJson(value), { mode });
+  const tmp = `${file}.${process.pid}.tmp`;
+  await writeFile(tmp, stableJson(value), { mode });
+  await rename(tmp, file);
 }

@@ -1,7 +1,9 @@
 import type { Skill } from "../bank/skill.ts";
 import type { Finding } from "../types.ts";
 
-export const SKILL_NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+import { SKILL_NAME } from "../names.ts";
+
+export { SKILL_NAME } from "../names.ts";
 const RESERVED = ["claude", "anthropic"];
 
 // name = dir name, kebab, ≤64, no reserved words

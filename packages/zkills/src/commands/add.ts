@@ -1,5 +1,6 @@
 import type { CAC } from "cac";
 import { managedNames } from "../core/lock/managed.ts";
+import { assertSkillNames } from "../core/names.ts";
 import { exists } from "../io/fs.ts";
 import { writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
@@ -14,7 +15,7 @@ type Opts = GlobalOpts & { force?: boolean };
 
 // No names = restore every locked skill missing on disk
 async function targets(ctx: Ctx, names: string[]): Promise<string[]> {
-  if (names.length > 0) return names;
+  if (names.length > 0) return assertSkillNames(names);
   const missing: string[] = [];
   for (const name of managedNames(ctx.lock)) {
     if (!(await exists(skillDir(ctx.p, name)))) missing.push(name);

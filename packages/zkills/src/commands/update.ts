@@ -1,5 +1,6 @@
 import type { CAC } from "cac";
 import { managedNames } from "../core/lock/managed.ts";
+import { assertSkillNames } from "../core/names.ts";
 import { EXTERNAL_WARNING, runExternalUpdate } from "../io/external.ts";
 import { spin } from "../io/spin.ts";
 import { intro, note, outro } from "../io/ui.ts";
@@ -14,7 +15,7 @@ export async function runUpdate(names: string[], opts: Opts): Promise<number> {
   intro("zkills update");
   const ctx = await loadContext(opts);
   const banks = await spin("fetch banks", () => loadBanks(ctx));
-  for (const name of names.length > 0 ? names : managedNames(ctx.lock)) {
+  for (const name of names.length > 0 ? assertSkillNames(names) : managedNames(ctx.lock)) {
     await updateName(ctx, banks, name, opts.force === true);
   }
   let code = 0;

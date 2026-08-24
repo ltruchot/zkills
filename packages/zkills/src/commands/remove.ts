@@ -1,5 +1,7 @@
 import type { CAC } from "cac";
 import { isManaged } from "../core/lock/managed.ts";
+import { assertSkillNames } from "../core/names.ts";
+import { snapshot } from "../io/backup.ts";
 import { rmDir } from "../io/fs.ts";
 import { removeLines } from "../io/gitignore.ts";
 import { withSecrets, writeLocal } from "../io/local.ts";
@@ -9,12 +11,12 @@ import { confirmOrYes } from "../io/prompts/confirm.ts";
 import { fail, info, intro, outro, success } from "../io/ui.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 
-// Managed skills only: dir, lock entry, secrets, gitignore line
+// Managed skills only: backup, dir, lock entry, secrets, gitignore line
 export async function runRemove(names: string[], opts: GlobalOpts): Promise<void> {
   intro("zkills remove");
   const ctx = await loadContext(opts);
   if (names.length === 0) fail("name at least one skill");
-  for (const name of names) {
+  for (const name of assertSkillNames(names)) {
     if (!isManaged(ctx.lock, name)) fail(`${name} is not managed by zkills`);
   }
   if (ctx.dryRun) {
@@ -23,11 +25,12 @@ export async function runRemove(names: string[], opts: GlobalOpts): Promise<void
   }
   if (!(await confirmOrYes(`Remove ${names.join(", ")}?`, ctx.yes))) return;
   for (const name of names) {
+    await snapshot(ctx.p, name);
     await rmDir(skillDir(ctx.p, name));
     Reflect.deleteProperty(ctx.lock.skills, name);
     ctx.local = withSecrets(ctx.local, name, {});
     await removeLines(ctx.p.claudeGitignore, [`skills/${name}/`]);
-    success(`${name} removed`);
+    success(`${name} removed, previous files kept in the backup cache`);
   }
   await writeLock(ctx.p, ctx.lock);
   await writeLocal(ctx.p, ctx.local);

@@ -1,5 +1,6 @@
 import type { CAC } from "cac";
 import pc from "picocolors";
+import { assertSkillName } from "../core/names.ts";
 import { writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
 import { fail, intro, outro, print } from "../io/ui.ts";
@@ -16,7 +17,7 @@ type Opts = GlobalOpts & { edit?: boolean };
 export async function runAnswers(name: string, opts: Opts): Promise<void> {
   intro("zkills answers");
   const ctx = await loadContext(opts);
-  const entry = ctx.lock.skills[name];
+  const entry = ctx.lock.skills[assertSkillName(name)];
   if (entry === undefined) fail(`${name} is not managed`);
   const known = knownAnswers(ctx, name, entry);
   print(

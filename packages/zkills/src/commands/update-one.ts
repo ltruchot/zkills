@@ -1,4 +1,6 @@
 import { splitAnswers } from "../core/answers/split.ts";
+import { swapDir } from "../io/atomic.ts";
+import { snapshot } from "../io/backup.ts";
 import { withSecrets } from "../io/local.ts";
 import { skillDir } from "../io/paths.ts";
 import { confirmOrYes } from "../io/prompts/confirm.ts";
@@ -11,7 +13,7 @@ import { previewPlan } from "./preview.ts";
 import { applyPlan } from "./update-apply.ts";
 import { planUpdate, type UpdateInput } from "./update-plan.ts";
 
-// Preview, confirm, apply, lock keeps pure render not disk
+// Preview, confirm, backup, atomic apply; lock keeps the pure render, not disk
 export async function applyUpdate(ctx: Ctx, input: UpdateInput): Promise<boolean> {
   const { found, entry, answers } = input;
   const { skill } = found;
@@ -33,7 +35,8 @@ export async function applyUpdate(ctx: Ctx, input: UpdateInput): Promise<boolean
     }
     if (!(await confirmOrYes(`Apply to ${skillDir(ctx.p, name)}?`, ctx.yes))) return false;
   }
-  const applied = await applyPlan(skillDir(ctx.p, name), planned.plan);
+  await snapshot(ctx.p, name);
+  const applied = await swapDir(skillDir(ctx.p, name), (work) => applyPlan(work, planned.plan));
   await putTemplate(skill.templateHash, skill.files);
   ctx.lock.skills[name] = entryFor(found, planned.theirs, answers);
   ctx.local = withSecrets(ctx.local, name, splitAnswers(skill.manifest, answers).secret);

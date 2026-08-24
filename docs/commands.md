@@ -24,6 +24,7 @@
 - `update --force` re-renders when template unchanged, `--external` runs `npx skills update`
 - `check --frozen` re-renders template with lock answers, mismatch = tamper; `--offline` skips fetch
 - `lint --portable` rejects Claude Code only frontmatter keys
+- policy `requireAudit: true` makes `add` and `update` refuse skills the audit flags
 
 ## Env
 

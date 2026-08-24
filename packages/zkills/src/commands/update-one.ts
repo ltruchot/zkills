@@ -7,6 +7,7 @@ import { confirmOrYes } from "../io/prompts/confirm.ts";
 import { putTemplate } from "../io/template-cache.ts";
 import { info, print, success, warn } from "../io/ui.ts";
 import { entryFor } from "./add-entry.ts";
+import { auditGate } from "./audit-gate.ts";
 import { knownAnswers } from "./answers-known.ts";
 import type { Ctx } from "./context.ts";
 import { previewPlan } from "./preview.ts";
@@ -26,6 +27,7 @@ export async function applyUpdate(ctx: Ctx, input: UpdateInput): Promise<boolean
     knownAnswers(ctx, name, entry),
     answers,
   );
+  auditGate(ctx, name, planned.theirs);
   if (planned.idle) info(`${name}: nothing to write`);
   else {
     print(previewPlan(planned.plan, planned.disk));

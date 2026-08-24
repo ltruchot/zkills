@@ -42,6 +42,6 @@
 
 - `allowedSources` blocks `add` from other repos
 - `denyFrontmatter` blocks skills using listed keys
-- `requireAudit` reserved for a future gate
+- `requireAudit` blocks `add` and `update` when the offline audit finds an error
 - Preset policy from a flavor merges first and only tightens: allowlist intersect, denylist union
 - `conflict` absent = preset default, else `inline`

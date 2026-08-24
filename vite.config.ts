@@ -15,6 +15,8 @@ export default defineConfig({
     tasks: {
       // Style law: every file under 50 lines
       lines: { command: "node scripts/lines.ts", cache: false },
+      // Publish safety: pnpm pack must resolve catalog: and keep bin
+      packcheck: { command: "node scripts/packcheck.ts", cache: false },
     },
   },
 });

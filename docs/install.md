@@ -15,6 +15,8 @@ npm i -g zkills        # global bin `zkills`
 
 - Run `npm` commands inside `packages/zkills`, never at the monorepo root
 - Root `devEngines` pins pnpm, npm refuses to run there
+- Publish a `pnpm pack` tarball, plain `npm publish` ships `catalog:` versions
+- `vp run packcheck` guards both in CI
 
 ## Token for the bank
 

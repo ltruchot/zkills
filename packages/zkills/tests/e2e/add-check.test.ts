@@ -1,7 +1,7 @@
-import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { appendFile, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "vite-plus/test";
-import { cli, project } from "../helpers/cli.ts";
+import { cli, FIXTURES, project } from "../helpers/cli.ts";
 import { cleanup } from "../helpers/tmp.ts";
 
 const ANSWERS = { ZKILLS_ANSWER_PROJECT_NAME: "Acme" };
@@ -10,6 +10,7 @@ test("init, add, check, list, drift, remove", async () => {
   const dir = await project("bank-v1");
   await mkdir(join(dir, ".claude/skills/manual"), { recursive: true });
   await writeFile(join(dir, ".claude/skills/manual/SKILL.md"), "hand written");
+  await copyFile(join(FIXTURES, "skills-lock.json"), join(dir, "skills-lock.json"));
 
   expect((await cli(dir, ["init", "-y"])).code).toBe(0);
   expect(await readFile(join(dir, ".claude/.gitignore"), "utf8")).toContain("zkills.local.json");
@@ -33,6 +34,7 @@ test("init, add, check, list, drift, remove", async () => {
   expect(list.map((r: { name: string; status: string }) => `${r.name}=${r.status}`)).toEqual([
     "hello=up to date",
     "manual=unmanaged, hand-written",
+    "angular-developer=external, unmanaged, review manually",
   ]);
 
   await appendFile(join(dir, ".claude/skills/hello/SKILL.md"), "- my edit\n");

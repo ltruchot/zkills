@@ -220,9 +220,6 @@ catalogs:
     execa:
       specifier: 10.0.1
       version: 10.0.1
-    giget:
-      specifier: 3.3.1
-      version: 3.3.1
     node-diff3:
       specifier: 3.2.1
       version: 3.2.1
@@ -260,38 +257,28 @@ importers:
         version: 0.3.0(@types/node@26.2.0)(@vitest/coverage-v8@4.1.11(@vitest/browser@4.1.11(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.2.0)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.0))(vitest@4.1.11))(vitest@4.1.11))(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.2.0)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.0))(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.0)
 
   packages/zkills:
-    dependencies:
+    devDependencies:
       '@clack/prompts':
         specifier: 'catalog:'
         version: 1.7.0
-      cac:
-        specifier: 'catalog:'
-        version: 7.0.0
-      execa:
-        specifier: 'catalog:'
-        version: 10.0.1
-      giget:
-        specifier: 'catalog:'
-        version: 3.3.1
-      node-diff3:
-        specifier: 'catalog:'
-        version: 3.2.1
-      picocolors:
-        specifier: 'catalog:'
-        version: 1.1.1
-      yaml:
-        specifier: 'catalog:'
-        version: 2.9.0
-      zod:
-        specifier: 'catalog:'
-        version: 4.4.3
-    devDependencies:
       '@types/node':
         specifier: 'catalog:'
         version: 26.2.0
       '@vitest/coverage-v8':
         specifier: 'catalog:'
         version: 4.1.11(@vitest/browser@4.1.11)(vitest@4.1.11)
+      cac:
+        specifier: 'catalog:'
+        version: 7.0.0
+      execa:
+        specifier: 'catalog:'
+        version: 10.0.1
+      node-diff3:
+        specifier: 'catalog:'
+        version: 3.2.1
+      picocolors:
+        specifier: 'catalog:'
+        version: 1.1.1
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
@@ -301,6 +288,12 @@ importers:
       vite-plus:
         specifier: 'catalog:'
         version: 0.3.0(@types/node@26.2.0)(@vitest/coverage-v8@4.1.11)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@26.2.0)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.0))(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.0)
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
 
 packages:
 
@@ -1163,10 +1156,6 @@ packages:
   get-stream@9.0.1:
     resolution: {integrity: sha512-kVCxPF3vQM/N0B1PmoqVUqgHP+EeVjmZSQn+1oCRPxd2P21P2F19lIgbR3HBosbB1PUhOAoctJnfEn2GbN2eZA==}
     engines: {node: '>=18'}
-
-  giget@3.3.1:
-    resolution: {integrity: sha512-r+mvuDjrjMpsdw46Kmeydb8bdHm7wOKw8wNBtTndkjbPjgAp5oUJUxRE76wZFknxIPokfWvep2qSXK37aXE6zg==}
-    hasBin: true
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -2133,8 +2122,6 @@ snapshots:
     dependencies:
       '@sec-ant/readable-stream': 0.4.1
       is-stream: 4.0.1
-
-  giget@3.3.1: {}
 
   has-flag@4.0.0: {}
 

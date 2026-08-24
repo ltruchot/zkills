@@ -8,6 +8,7 @@ export const Source = z.object({
   ref: z.string().min(1).default("main"),
   path: z.string().min(1).default("skills"),
   type: SourceType.default("github"),
+  host: z.string().min(1).default("github.com"),
 });
 
 export const ConflictMode = z.enum(["inline", "rej", "ours", "theirs"]);
@@ -21,7 +22,7 @@ export const Policy = z.object({
 export const Config = z.object({
   version: z.literal(1),
   sources: z.array(Source).min(1),
-  conflict: ConflictMode.default("inline"),
+  conflict: ConflictMode.optional(),
   policy: Policy.optional(),
 });
 

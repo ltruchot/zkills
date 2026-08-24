@@ -1,8 +1,7 @@
 {
   "name": "zkills",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Claude-only skills manager for private org banks, placeholders and drift-safe updates",
-  "homepage": "https://github.com/ltruchot/zkills#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,22 +24,19 @@
     "check": "vp check",
     "prepublishOnly": "vp run build"
   },
-  "dependencies": {
-    "@clack/prompts": "catalog:",
-    "cac": "catalog:",
-    "execa": "catalog:",
-    "giget": "catalog:",
-    "node-diff3": "catalog:",
-    "picocolors": "catalog:",
-    "yaml": "catalog:",
-    "zod": "catalog:"
-  },
   "devDependencies": {
+    "@clack/prompts": "catalog:",
     "@types/node": "catalog:",
     "@vitest/coverage-v8": "catalog:",
+    "cac": "catalog:",
+    "execa": "catalog:",
+    "node-diff3": "catalog:",
+    "picocolors": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "yaml": "catalog:",
+    "zod": "catalog:"
   },
   "engines": {
     "node": ">=22.18.0"

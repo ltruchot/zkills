@@ -17,6 +17,8 @@ export default defineConfig({
       lines: { command: "node scripts/lines.ts", cache: false },
       // Publish safety: pnpm pack must resolve catalog: and keep bin
       packcheck: { command: "node scripts/packcheck.ts", cache: false },
+      // White-label proof: example flavor baked, dist runs without node_modules
+      flavorcheck: { command: "node scripts/flavorcheck.ts", cache: false },
     },
   },
 });

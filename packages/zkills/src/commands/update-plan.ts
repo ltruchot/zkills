@@ -36,7 +36,7 @@ export async function planUpdate(
     disk,
     lockFiles: entry.files,
     skip: skill.manifest.skipIfExists,
-    mode: ctx.config.conflict,
+    mode: ctx.conflict,
   });
   const idle = Object.keys(summarize(plan)).every((k) => k === "keep");
   return { plan, theirs, disk, idle };

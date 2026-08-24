@@ -30,8 +30,9 @@ test("default config", () => {
     ref: "main",
     path: "skills",
     type: "github",
+    host: "github.com",
   });
-  expect(c.conflict).toBe("inline");
+  expect(c.conflict).toBeUndefined();
 });
 
 test("frontmatter split", () => {

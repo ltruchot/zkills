@@ -1,0 +1,17 @@
+{
+  "name": "acme-skills",
+  "sources": [
+    { "repo": "acme/skills", "ref": "main", "path": "skills", "host": "github.acme.internal" }
+  ],
+  "policy": {
+    "allowedSources": ["acme/skills"],
+    "denyFrontmatter": ["hooks"],
+    "requireAudit": true
+  },
+  "conflict": "inline",
+  "links": [
+    { "label": "skills wiki", "url": "https://wiki.acme.internal/skills" },
+    { "label": "support", "url": "https://chat.acme.internal/#skills" }
+  ],
+  "notes": ["review every skill diff before confirm", "never add skills outside the bank"]
+}

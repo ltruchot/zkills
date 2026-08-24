@@ -27,6 +27,10 @@ export async function applyUpdate(ctx: Ctx, input: UpdateInput): Promise<boolean
   if (planned.idle) info(`${name}: nothing to write`);
   else {
     print(previewPlan(planned.plan, planned.disk));
+    if (ctx.dryRun) {
+      info(`${name}: dry run, nothing written`);
+      return false;
+    }
     if (!(await confirmOrYes(`Apply to ${skillDir(ctx.p, name)}?`, ctx.yes))) return false;
   }
   const applied = await applyPlan(skillDir(ctx.p, name), planned.plan);

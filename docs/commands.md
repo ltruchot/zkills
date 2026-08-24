@@ -4,12 +4,16 @@
 
 - `--cwd <dir>` project dir, default cwd, walks up to config or `.git`
 - `-y, --yes` no prompts, fails on missing answers
-- `--json` machine output for `list`, `lint`, `audit`
+- `--json` machine output for `list`, `info`, `lint`, `audit`
+- `--dry-run` preview only, `add`, `update`, `remove` write nothing
 
 ## init [repo]
 
-- Writes `zkills.config.json`, empty lock, `.claude/.gitignore`
-- Creates `.claude/skills`, warns to restart Claude Code
+- Writes config (arg, else preset, else prompt), lock, `.claude/.gitignore`, `.claude/skills`
+
+## info
+
+- Flavor, config path, cache, offline flag, sources, effective policy, links, notes
 
 ## list
 

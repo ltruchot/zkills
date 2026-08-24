@@ -19,11 +19,13 @@ try {
     dependencies?: Record<string, string>;
   };
   const deps = Object.entries(pkg.dependencies ?? {});
-  const bad = deps.filter(([, v]) => v.startsWith("catalog:") || v.startsWith("workspace:"));
-  if (bad.length > 0) throw new Error(`unresolved protocols: ${bad.map(([k]) => k).join(", ")}`);
+  if (deps.length > 0)
+    throw new Error(`runtime deps must be bundled, found: ${deps.map(([k]) => k).join(", ")}`);
+  if (manifest.includes("catalog:") || manifest.includes("workspace:"))
+    throw new Error("unresolved pnpm protocol in manifest");
   if (pkg.bin?.zkills !== "dist/cli.js")
     throw new Error(`bin missing or wrong: ${JSON.stringify(pkg.bin)}`);
-  console.log(`packcheck: ok (${deps.length} deps pinned, bin present)`);
+  console.log("packcheck: ok (zero runtime deps, bin present)");
 } finally {
   rmSync(out, { recursive: true, force: true });
 }

@@ -20,7 +20,13 @@ test("findings formatting", () => {
 
 test("policy, skill without SKILL.md, skills-lock tolerance", async () => {
   const skill = skillFromFiles("s", "/s", fm({ "SKILL.md": "---\nname: s\nhooks: []\n---\n" }));
-  const source = { repo: "o/r", ref: "main", path: "skills", type: "github" as const };
+  const source = {
+    repo: "o/r",
+    ref: "main",
+    path: "skills",
+    type: "github" as const,
+    host: "github.com",
+  };
   expect(checkPolicy(undefined, source, skill)).toBeNull();
   expect(checkPolicy({ requireAudit: false }, source, skill)).toBeNull();
   const strict = { allowedSources: ["o/r"], denyFrontmatter: ["hooks"], requireAudit: false };

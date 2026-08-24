@@ -8,7 +8,7 @@ import { secretsFor, withSecrets } from "../io/local.ts";
 import { skillDir } from "../io/paths.ts";
 import { confirmOrYes } from "../io/prompts/confirm.ts";
 import { putTemplate } from "../io/template-cache.ts";
-import { fail, print, success } from "../io/ui.ts";
+import { fail, info, print, success } from "../io/ui.ts";
 import { entryFor } from "./add-entry.ts";
 import { collectAnswers } from "./add-prompts.ts";
 import type { Found } from "./banks.ts";
@@ -18,7 +18,7 @@ import { previewInstall } from "./preview.ts";
 // Install or reinstall one skill, mutates ctx.lock and ctx.local
 export async function addOne(ctx: Ctx, found: Found, force: boolean): Promise<void> {
   const { bank, skill } = found;
-  const denied = checkPolicy(ctx.config.policy, bank.source, skill);
+  const denied = checkPolicy(ctx.policy, bank.source, skill);
   if (denied !== null) fail(`${skill.name}: ${denied}`);
   const dir = skillDir(ctx.p, skill.name);
   const present = await exists(dir);
@@ -29,6 +29,10 @@ export async function addOne(ctx: Ctx, found: Found, force: boolean): Promise<vo
   const answers = await collectAnswers(skill.manifest, known, ctx.yes);
   const rendered = renderTree(skill.files, skill.manifest, answers);
   print(previewInstall(rendered, present ? await readTree(dir) : null));
+  if (ctx.dryRun) {
+    info(`${skill.name}: dry run, nothing written`);
+    return;
+  }
   if (!(await confirmOrYes(`Write ${skill.name} to ${dir}?`, ctx.yes))) return;
   if (present) await rmDir(dir);
   await writeTree(dir, rendered);

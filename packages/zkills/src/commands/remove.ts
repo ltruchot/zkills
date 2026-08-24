@@ -6,7 +6,7 @@ import { withSecrets, writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
 import { skillDir } from "../io/paths.ts";
 import { confirmOrYes } from "../io/prompts/confirm.ts";
-import { fail, intro, outro, success } from "../io/ui.ts";
+import { fail, info, intro, outro, success } from "../io/ui.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 
 // Managed skills only: dir, lock entry, secrets, gitignore line
@@ -16,6 +16,10 @@ export async function runRemove(names: string[], opts: GlobalOpts): Promise<void
   if (names.length === 0) fail("name at least one skill");
   for (const name of names) {
     if (!isManaged(ctx.lock, name)) fail(`${name} is not managed by zkills`);
+  }
+  if (ctx.dryRun) {
+    info(`dry run, would remove ${names.join(", ")}`);
+    return;
   }
   if (!(await confirmOrYes(`Remove ${names.join(", ")}?`, ctx.yes))) return;
   for (const name of names) {

@@ -3,8 +3,8 @@
 - Claude-only skills manager for private org banks, any GitHub org
 - Installs, updates, removes `SKILL.md` dirs in `.claude/skills/`
 - Placeholders `{{GITHUB_REPO}}` asked once per project, never seen as drift
-- Update = 3-way merge, local edits survive
-- Zero telemetry, GitHub only
+- Update = 3-way merge, local edits survive, zero telemetry, zero dependencies
+- White label: fork, drop `flavor/preset.json`, publish on your registry
 
 ## Install
 
@@ -15,7 +15,8 @@ npm i -g zkills   # or npx zkills
 ## Use
 
 ```bash
-zkills init                 # zkills.config.json + .claude/zkills.lock.json
+zkills init my-org/skills   # zkills.config.json + .claude/zkills.lock.json
+zkills info                 # flavor, sources, policy, links
 zkills list                 # bank, installed, external skills
 zkills add qa-pr            # prompts placeholders, previews, writes
 zkills update               # merges bank changes, keeps local edits
@@ -29,14 +30,14 @@ zkills audit                # offline danger scan
 
 - Bank repo = `skills/<name>/SKILL.md` + `skills/<name>/zkills.yaml`
 - Only declared `{{PLACEHOLDERS}}` get substituted
-- Lock pins commit sha, template hash, rendered hash, public answers
-- Secrets live in gitignored `.claude/zkills.local.json`
+- Lock pins commit sha and hashes, secrets stay in gitignored `.claude/zkills.local.json`
 - Hand-written skills never touched
 - Reference bank: [Gods-Academy/skills](https://github.com/Gods-Academy/skills)
 
 ## Docs
 
 - [Install](docs/install.md) registry, token, first run
+- [Enterprise](docs/enterprise.md) white-label fork, air gap, presets
 - [Commands](docs/commands.md) flags, exit codes
 - [Contract](docs/contract.md) bank layout, `zkills.yaml`
 - [Placeholders](docs/placeholders.md) syntax, types, secrets

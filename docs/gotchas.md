@@ -5,6 +5,7 @@
 - Shell cwd resets between commands, always absolute paths, never bare `rm -rf`
 - zsh: quote globs (`--include='*.md'`), `setopt nonomatch` before `rm -f *.tgz`
 - Blind string patches fail after oxfmt reformat, rewrite small files whole
+- `vp lint --fix` may rename matchers (`toEqual` → `toStrictEqual`), grep before patching tests
 
 ## Lint and format
 
@@ -21,20 +22,24 @@
 - e2e call `main()` in-process for real coverage, one spawn test for the bin
 - `ZKILLS_ANSWER_<NAME>` feeds prompts, `XDG_CACHE_HOME` isolates cache
 
+## Build
+
+- `dts` with tsgo spawns EBUSY under WSL, keep `dts: false`
+- Two entries make tsdown split a shared chunk, keep one entry so `dist/cli.js` runs alone
+- Never `require("../package.json")` at runtime, bake values with `define`
+- Runtime deps live in `devDependencies` so tsdown bundles them, `packcheck` enforces zero deps
+
 ## npm and release
 
 - Root `devEngines` pins pnpm, npm commands only inside `packages/zkills` or `/tmp`
 - `npm publish` ships `catalog:` versions, always publish a `pnpm pack` tarball
-- `vp run packcheck` guards catalog leaks and the `bin` entry
 - `publishConfig.provenance` breaks local publish, provenance comes from trusted publishing in CI only
 - `bin` path without `./`, npm normalizes to `dist/cli.js`
 - Trusted publishing needs an existing package, first version is published by hand
 - WSL: npm web auth needs `BROWSER=wslview`, or `--auth-type=legacy` for a terminal OTP
-- New version pinned in bank CI only once it exists on npm
+- Actions with setup-vp: `pnpm` is not on PATH outside `vp run`, call `vp pm <cmd>`
 
 ## YAML and GitHub
 
 - Never a bare `word:` inside an unquoted `name:` value
-- Actions with setup-vp: `pnpm` is not on PATH outside `vp run`, call `vp pm <cmd>`
 - Repo transfer is async, first push after may 403, retry
-- Actions of another repo cannot read a GitHub Packages package without a grant

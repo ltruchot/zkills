@@ -6,6 +6,7 @@
 - zsh: quote globs (`--include='*.md'`), `setopt nonomatch` before `rm -f *.tgz`
 - Blind string patches fail after oxfmt reformat, rewrite small files whole
 - `vp lint --fix` may rename matchers (`toEqual` → `toStrictEqual`), grep before patching tests
+- An edit script that asserts mid-way ships half the change, grep every expected line before commit
 
 ## Lint and format
 
@@ -37,6 +38,7 @@
 - `publishConfig.provenance` breaks local publish, provenance comes from trusted publishing in CI only
 - `bin` path without `./`, npm normalizes to `dist/cli.js`
 - Trusted publishing needs an existing package, first version is published by hand
+- A cancelled release may already be on npm, bump the patch version, keep the tag on the published commit
 - WSL: npm web auth needs `BROWSER=wslview`, or `--auth-type=legacy` for a terminal OTP
 - Actions with setup-vp: `pnpm` is not on PATH outside `vp run`, call `vp pm <cmd>`
 

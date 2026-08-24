@@ -1,6 +1,6 @@
 {
   "name": "zkills",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Claude-only skills manager for private org banks, placeholders and drift-safe updates",
   "license": "MIT",
   "repository": {

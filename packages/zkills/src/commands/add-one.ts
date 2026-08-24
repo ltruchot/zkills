@@ -8,6 +8,7 @@ import { confirmOrYes } from "../io/prompts/confirm.ts";
 import { fail, info, print, success } from "../io/ui.ts";
 import { collectAnswers } from "./add-prompts.ts";
 import { installFiles } from "./add-write.ts";
+import { auditGate } from "./audit-gate.ts";
 import type { Found } from "./banks.ts";
 import type { Ctx } from "./context.ts";
 import { previewInstall } from "./preview.ts";
@@ -25,6 +26,7 @@ export async function addOne(ctx: Ctx, found: Found, force: boolean): Promise<vo
   const known = { ...entry?.answers, ...secretsFor(ctx.local, skill.name) };
   const answers = await collectAnswers(skill.manifest, known, ctx.yes);
   const rendered = renderTree(skill.files, skill.manifest, answers);
+  auditGate(ctx, skill.name, rendered);
   print(previewInstall(rendered, present ? await readTree(dir) : null));
   if (ctx.dryRun) {
     info(`${skill.name}: dry run, nothing written`);

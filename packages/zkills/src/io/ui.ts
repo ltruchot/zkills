@@ -14,7 +14,12 @@ export function fail(msg: string): never {
   process.exit(1);
 }
 
+// Spinner frames flood CI logs, plain step when not a TTY
 export async function spin<T>(label: string, fn: () => Promise<T>): Promise<T> {
+  if (!process.stdout.isTTY) {
+    step(label);
+    return fn();
+  }
   const s = p.spinner();
   s.start(label);
   try {

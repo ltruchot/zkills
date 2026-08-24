@@ -1,6 +1,6 @@
 {
   "name": "@gods-academy/zkills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Claude-only skills manager for private org banks",
   "license": "MIT",
   "repository": {

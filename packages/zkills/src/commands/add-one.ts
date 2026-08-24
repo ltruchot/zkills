@@ -7,6 +7,7 @@ import { ensureLines } from "../io/gitignore.ts";
 import { secretsFor, withSecrets } from "../io/local.ts";
 import { skillDir } from "../io/paths.ts";
 import { confirmOrYes } from "../io/prompts/confirm.ts";
+import { putTemplate } from "../io/template-cache.ts";
 import { fail, print, success } from "../io/ui.ts";
 import { entryFor } from "./add-entry.ts";
 import { collectAnswers } from "./add-prompts.ts";
@@ -31,6 +32,7 @@ export async function addOne(ctx: Ctx, found: Found, force: boolean): Promise<vo
   if (!(await confirmOrYes(`Write ${skill.name} to ${dir}?`, ctx.yes))) return;
   if (present) await rmDir(dir);
   await writeTree(dir, rendered);
+  await putTemplate(skill.templateHash, skill.files);
   ctx.lock.skills[skill.name] = entryFor(found, rendered, answers);
   const secret = splitAnswers(skill.manifest, answers).secret;
   ctx.local = withSecrets(ctx.local, skill.name, secret);

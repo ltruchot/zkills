@@ -9,15 +9,14 @@
     "url": "git+https://github.com/ltruchot/zkills.git"
   },
   "bin": {
-    "zkills": "./dist/cli.js"
+    "zkills": "dist/cli.js"
   },
   "files": [
     "dist"
   ],
   "type": "module",
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "scripts": {
     "build": "vp pack",

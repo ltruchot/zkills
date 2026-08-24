@@ -24,4 +24,4 @@ jobs:
         working-directory: /tmp # root package.json pins pnpm via devEngines, npm refuses to run there
       - name: publish to npm with provenance
         working-directory: packages/zkills
-        run: npm publish --ignore-scripts --access public
+        run: npm publish --ignore-scripts --access public --provenance

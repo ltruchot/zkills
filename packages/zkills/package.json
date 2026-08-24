@@ -1,0 +1,46 @@
+{
+  "name": "@gods-academy/zkills",
+  "version": "0.1.0",
+  "description": "Claude-only skills manager for private org banks",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gods-Academy/zkills.git"
+  },
+  "bin": {
+    "zkills": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check",
+    "prepublishOnly": "vp run build"
+  },
+  "dependencies": {
+    "@clack/prompts": "catalog:",
+    "cac": "catalog:",
+    "execa": "catalog:",
+    "giget": "catalog:",
+    "node-diff3": "catalog:",
+    "picocolors": "catalog:",
+    "yaml": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

@@ -1,12 +1,9 @@
 import type { CAC } from "cac";
 import pc from "picocolors";
-import { validateAnswer } from "../core/answers/validate.ts";
-import type { Answers } from "../core/types.ts";
 import { writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
-import { askPlaceholder } from "../io/prompts/placeholder.ts";
 import { fail, intro, outro, print } from "../io/ui.ts";
-import { ENV_PREFIX } from "./add-prompts.ts";
+import { editAnswers } from "./answers-edit.ts";
 import { findSkill, loadBanks } from "./banks.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 import { baseSkill } from "./update-base.ts";
@@ -29,13 +26,7 @@ export async function runAnswers(name: string, opts: Opts): Promise<void> {
   if (opts.edit !== true) return outro("use --edit to change");
   const found = findSkill(await loadBanks(ctx), name);
   if (found === undefined) fail(`${name}: gone from bank`);
-  const answers: Answers = { ...known };
-  for (const decl of found.skill.manifest.placeholders) {
-    const fromEnv = process.env[`${ENV_PREFIX}${decl.name}`];
-    if (fromEnv !== undefined && validateAnswer(decl, fromEnv) === null)
-      answers[decl.name] = fromEnv;
-    else if (!ctx.yes) answers[decl.name] = await askPlaceholder(decl, known[decl.name]);
-  }
+  const answers = await editAnswers(found.skill.manifest, known, ctx.yes);
   const base = await baseSkill(ctx, found, entry);
   await applyUpdate(ctx, { found, entry, base, answers });
   await writeLock(ctx.p, ctx.lock);

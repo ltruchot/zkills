@@ -34,6 +34,6 @@ export function skillFromFiles(name: string, dir: string, files: FileMap): Skill
 }
 
 export function description(skill: Skill): string {
-  const value = skill.frontmatter.data.description;
+  const value = skill.frontmatter.data["description"];
   return typeof value === "string" ? value : "";
 }

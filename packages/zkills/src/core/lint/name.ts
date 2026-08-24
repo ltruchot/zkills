@@ -7,7 +7,7 @@ const RESERVED = ["claude", "anthropic"];
 // name = dir name, kebab, ≤64, no reserved words
 export function lintName(skill: Skill): Finding[] {
   const out: Finding[] = [];
-  const name = skill.frontmatter.data.name;
+  const name = skill.frontmatter.data["name"];
   const push = (msg: string): number =>
     out.push({ rule: "name", level: "error", file: "SKILL.md", msg });
   if (typeof name !== "string") push("frontmatter name required");

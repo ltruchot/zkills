@@ -14,13 +14,10 @@ async function ghToken(): Promise<string | null> {
 }
 
 // ZKILLS_TOKEN → GH_TOKEN → GITHUB_TOKEN → gh auth token
-export async function resolveToken(
-  env: Env = process.env,
-  fallback = ghToken,
-): Promise<string | null> {
+export function resolveToken(env: Env = process.env, fallback = ghToken): Promise<string | null> {
   for (const name of TOKEN_VARS) {
     const value = env[name];
-    if (value !== undefined && value.length > 0) return value;
+    if (value !== undefined && value.length > 0) return Promise.resolve(value);
   }
   return fallback();
 }

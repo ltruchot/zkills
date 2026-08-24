@@ -18,7 +18,7 @@ test("update merges upstream changes and keeps local edits", async () => {
   expect((await cli(dir, ["check"], env)).code).toBe(1);
   expect((await cli(dir, ["update", "-y"], env)).code).toBe(1);
   const up = await cli(dir, ["update", "-y"], { ...env, ZKILLS_ANSWER_TEAM: "core" });
-  expect(up.code, up.out).toBe(0);
+  expect(up.code).toBe(0);
   expect(await read(dir)).toContain("Team: core");
   expect(await read(dir)).toContain("Say hello twice");
   expect(await readFile(join(dir, ".claude/skills/hello/references/guide.md"), "utf8")).toContain(
@@ -30,7 +30,7 @@ test("update merges upstream changes and keeps local edits", async () => {
   expect((await cli(dir, ["check"], env)).code).toBe(2);
   await setBank(dir, "bank-v1");
   const back = await cli(dir, ["update", "-y"], env);
-  expect(back.code, back.out).toBe(0);
+  expect(back.code).toBe(0);
   expect(await read(dir)).toContain("- my edit");
   expect(await read(dir)).not.toContain("Team:");
   expect(await read(dir)).toContain("- Say hello\n");
@@ -42,7 +42,7 @@ test("update merges upstream changes and keeps local edits", async () => {
     ...env,
     ZKILLS_ANSWER_PROJECT_NAME: "Beta",
   });
-  expect(edit.code, edit.out).toBe(0);
+  expect(edit.code).toBe(0);
   expect(await read(dir)).toContain("Project: Beta");
   expect(await read(dir)).toContain("- my edit");
   await cleanup(dir);

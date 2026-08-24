@@ -25,9 +25,9 @@ test("entry keeps public answers, lists secret names", () => {
     answers: { A: "1", S: "2" },
   });
   expect(LockEntry.safeParse(entry).success).toBe(true);
-  expect(entry.answers).toEqual({ A: "1" });
-  expect(entry.secrets).toEqual(["S"]);
-  expect(Object.keys(entry.files)).toEqual(["SKILL.md"]);
+  expect(entry.answers).toStrictEqual({ A: "1" });
+  expect(entry.secrets).toStrictEqual(["S"]);
+  expect(Object.keys(entry.files)).toStrictEqual(["SKILL.md"]);
 });
 
 test("stable json sorts keys deeply", () => {
@@ -39,5 +39,5 @@ test("stable json sorts keys deeply", () => {
 test("managed set", () => {
   const lock = emptyLock();
   expect(isManaged(lock, "x")).toBe(false);
-  expect(unmanagedDirs(lock, ["b", "a"])).toEqual(["a", "b"]);
+  expect(unmanagedDirs(lock, ["b", "a"])).toStrictEqual(["a", "b"]);
 });

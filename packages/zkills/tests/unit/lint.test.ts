@@ -5,7 +5,7 @@ import { FIXTURES } from "../helpers/cli.ts";
 
 test("hello only trips its intentional undeclared token", async () => {
   const findings = await lintSkill(join(FIXTURES, "bank-v1/skills/hello"), { portable: true });
-  expect(findings.map((f) => `${f.level}:${f.rule}`)).toEqual(["error:placeholders"]);
+  expect(findings.map((f) => `${f.level}:${f.rule}`)).toStrictEqual(["error:placeholders"]);
   expect(findings[0]?.msg).toContain("NOT_DECLARED");
 });
 
@@ -22,7 +22,7 @@ test("bad skill reports name, description, placeholders", async () => {
 
 test("claude-only key is fine without --portable, missing dir is one error", async () => {
   const findings = await lintSkill(join(FIXTURES, "bank-bad/skills/Bad_Name"), { portable: false });
-  expect(findings.filter((f) => f.rule === "frontmatter")).toEqual([]);
+  expect(findings.filter((f) => f.rule === "frontmatter")).toStrictEqual([]);
   const missing = await lintSkill(join(FIXTURES, "nope"), { portable: false });
-  expect(missing.map((f) => f.rule)).toEqual(["read"]);
+  expect(missing.map((f) => f.rule)).toStrictEqual(["read"]);
 });

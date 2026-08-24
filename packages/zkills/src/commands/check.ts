@@ -4,7 +4,8 @@ import { managedNames, unmanagedDirs } from "../core/lock/managed.ts";
 import { STATUS_LABEL, type Status } from "../core/status/buckets.ts";
 import { exitCode } from "../core/status/exit-code.ts";
 import { listDirs } from "../io/dirs.ts";
-import { info, intro, outro, print, spin } from "../io/ui.ts";
+import { spin } from "../io/spin.ts";
+import { info, intro, outro, print } from "../io/ui.ts";
 import { type Bank, loadBanks } from "./banks.ts";
 import { checkOne } from "./check-one.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
@@ -15,7 +16,7 @@ const paint = (s: Status): string =>
   s === "ok" ? pc.green(STATUS_LABEL[s]) : pc.red(STATUS_LABEL[s]);
 
 // Exit 0 ok, 1 update, 2 drift, 3 tamper
-export async function runCheck(opts: Opts): Promise<void> {
+export async function runCheck(opts: Opts): Promise<number> {
   intro("zkills check");
   const ctx = await loadContext(opts);
   const banks: Bank[] =
@@ -34,7 +35,7 @@ export async function runCheck(opts: Opts): Promise<void> {
   if (unmanaged.length > 0) info(`unmanaged: ${unmanaged.join(", ")}`);
   const code = exitCode(all);
   outro(code === 0 ? pc.green("all good") : pc.red(`exit ${code}`));
-  process.exitCode = code;
+  return code;
 }
 
 export function register(cli: CAC): void {

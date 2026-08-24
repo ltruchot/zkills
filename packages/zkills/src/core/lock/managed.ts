@@ -5,10 +5,10 @@ export function isManaged(lock: LockFile, name: string): boolean {
 }
 
 export function managedNames(lock: LockFile): string[] {
-  return Object.keys(lock.skills).sort();
+  return Object.keys(lock.skills).toSorted();
 }
 
 // Skill dirs present on disk but absent from lock
 export function unmanagedDirs(lock: LockFile, dirs: string[]): string[] {
-  return dirs.filter((d) => !isManaged(lock, d)).sort();
+  return dirs.filter((d) => !isManaged(lock, d)).toSorted();
 }

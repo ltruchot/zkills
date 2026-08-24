@@ -7,7 +7,8 @@ import { editAnswers } from "./answers-edit.ts";
 import { findSkill, loadBanks } from "./banks.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 import { baseSkill } from "./update-base.ts";
-import { applyUpdate, knownAnswers } from "./update-one.ts";
+import { knownAnswers } from "./answers-known.ts";
+import { applyUpdate } from "./update-one.ts";
 
 type Opts = GlobalOpts & { edit?: boolean };
 
@@ -20,10 +21,13 @@ export async function runAnswers(name: string, opts: Opts): Promise<void> {
   const known = knownAnswers(ctx, name, entry);
   print(
     Object.keys(known)
-      .sort()
+      .toSorted()
       .map((k) => `${k} = ${entry.secrets.includes(k) ? pc.dim("••••") : known[k]}`),
   );
-  if (opts.edit !== true) return outro("use --edit to change");
+  if (opts.edit !== true) {
+    outro("use --edit to change");
+    return;
+  }
   const found = findSkill(await loadBanks(ctx), name);
   if (found === undefined) fail(`${name}: gone from bank`);
   const answers = await editAnswers(found.skill.manifest, known, ctx.yes);

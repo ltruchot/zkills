@@ -12,7 +12,7 @@ const lockFiles = hashTree(base).files;
 test("placeholder-only change is plain write, untouched files deleted", () => {
   const theirs = fm({ "SKILL.md": "repo: new\nbody\n", "ref.md": "r\n" });
   const plan = buildPlan({ base, theirs, disk: base, lockFiles, skip: [], mode: "inline" });
-  expect(plan.map((a) => `${a.rel}:${a.kind}`)).toEqual([
+  expect(plan.map((a) => `${a.rel}:${a.kind}`)).toStrictEqual([
     "SKILL.md:write",
     "gone.md:delete",
     "ref.md:keep",
@@ -43,5 +43,5 @@ test("overlap conflicts, skipIfExists and extras kept", () => {
   expect(skill?.rej?.toString()).toBe("repo: new\nbody\n");
   expect(plan.find((a) => a.rel === "ref.md")?.reason).toBe("skipIfExists");
   expect(plan.find((a) => a.rel === "manual.md")?.reason).toBe("not managed");
-  expect(summarize(plan)).toEqual({ conflict: 1, keep: 3 });
+  expect(summarize(plan)).toStrictEqual({ conflict: 1, keep: 3 });
 });

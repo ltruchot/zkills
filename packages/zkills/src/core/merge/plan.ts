@@ -15,7 +15,7 @@ export type PlanInput = {
 export function buildPlan(input: PlanInput): PlanAction[] {
   const rels = new Set([...input.base.keys(), ...input.theirs.keys(), ...input.disk.keys()]);
   const skip = new Set(input.skip);
-  return [...rels].sort().map((rel) =>
+  return [...rels].toSorted().map((rel) =>
     planFile({
       rel,
       base: input.base.get(rel),

@@ -22,15 +22,19 @@ const entry: LockEntry = {
 };
 
 test("status buckets", () => {
-  expect(computeStatus({ entry, disk })).toEqual(["ok"]);
-  expect(computeStatus({ entry, disk: null })).toEqual(["missing"]);
-  expect(computeStatus({ entry, disk, bankTemplateHash: "c".repeat(64) })).toEqual(["update"]);
-  expect(computeStatus({ entry, disk, configRef: "dev" })).toEqual(["wrong-ref"]);
-  expect(computeStatus({ entry, disk, frozenRenderedHash: "d".repeat(64) })).toEqual(["tamper"]);
+  expect(computeStatus({ entry, disk })).toStrictEqual(["ok"]);
+  expect(computeStatus({ entry, disk: null })).toStrictEqual(["missing"]);
+  expect(computeStatus({ entry, disk, bankTemplateHash: "c".repeat(64) })).toStrictEqual([
+    "update",
+  ]);
+  expect(computeStatus({ entry, disk, configRef: "dev" })).toStrictEqual(["wrong-ref"]);
+  expect(computeStatus({ entry, disk, frozenRenderedHash: "d".repeat(64) })).toStrictEqual([
+    "tamper",
+  ]);
   const edited: FileMap = new Map([
     ["SKILL.md", { bytes: Buffer.from("<<<<<<< local\nx\n"), mode: MODE_FILE }],
   ]);
-  expect(computeStatus({ entry, disk: edited })).toEqual(["drift", "conflict"]);
+  expect(computeStatus({ entry, disk: edited })).toStrictEqual(["drift", "conflict"]);
 });
 
 test("exit codes", () => {

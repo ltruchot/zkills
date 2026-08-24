@@ -11,9 +11,11 @@ import { fetchLocal } from "../../src/io/source-local.ts";
 import { cleanup, tmpDir } from "../helpers/tmp.ts";
 
 test("token precedence and fallback", async () => {
-  expect(await resolveToken({ GH_TOKEN: "gh", ZKILLS_TOKEN: "zk" }, async () => null)).toBe("zk");
-  expect(await resolveToken({ GITHUB_TOKEN: "" }, async () => "cli")).toBe("cli");
-  expect(await resolveToken({}, async () => null)).toBeNull();
+  expect(
+    await resolveToken({ GH_TOKEN: "gh", ZKILLS_TOKEN: "zk" }, () => Promise.resolve(null)),
+  ).toBe("zk");
+  expect(await resolveToken({ GITHUB_TOKEN: "" }, () => Promise.resolve("cli"))).toBe("cli");
+  expect(await resolveToken({}, () => Promise.resolve(null))).toBeNull();
 });
 
 test("gitignore lines idempotent", async () => {
@@ -32,7 +34,7 @@ test("local secrets file is private and sorted", async () => {
   await writeLocal(p, withSecrets(await readLocal(p), "x", { B: "2", A: "1" }));
   expect((await stat(p.local)).mode & 0o777).toBe(0o600);
   expect(await readFile(p.local, "utf8")).toContain('"A": "1",\n      "B": "2"');
-  expect(withSecrets(await readLocal(p), "x", {}).secrets).toEqual({});
+  expect(withSecrets(await readLocal(p), "x", {}).secrets).toStrictEqual({});
   await cleanup(dir);
 });
 

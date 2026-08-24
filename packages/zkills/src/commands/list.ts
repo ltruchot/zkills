@@ -1,6 +1,7 @@
 import type { CAC } from "cac";
 import pc from "picocolors";
-import { intro, print, spin } from "../io/ui.ts";
+import { spin } from "../io/spin.ts";
+import { intro, print } from "../io/ui.ts";
 import { loadBanks } from "./banks.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 import { listRows, type Row } from "./list-rows.ts";
@@ -23,7 +24,7 @@ export async function runList(opts: GlobalOpts): Promise<void> {
     : await spin("fetch banks", () => loadBanks(ctx, false));
   const rows = await listRows(ctx, banks);
   if (ctx.json) {
-    console.log(JSON.stringify(rows, null, 2));
+    print([JSON.stringify(rows, null, 2)]);
     return;
   }
   intro("zkills list");

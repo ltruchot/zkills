@@ -40,6 +40,7 @@ release. Add a tool name to select part of the graph. For example, run
 - No new dep without catalog pin, no `^`
 - `vp check && vp run lines && vp test` green = done
 - Never `git commit --no-verify`, never weaken lint
+- New lint exception = one line in `lint/off-*.ts` with a reason
 
 ## Layout
 

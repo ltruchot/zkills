@@ -1,5 +1,5 @@
 import { mkdir } from "node:fs/promises";
-import * as p from "@clack/prompts";
+import { isCancel, text } from "@clack/prompts";
 import type { CAC } from "cac";
 import { defaultConfig } from "../core/schema/config.ts";
 import { LOCAL_FILE } from "../core/schema/local.ts";
@@ -9,6 +9,7 @@ import { exists } from "../io/fs.ts";
 import { ensureLines } from "../io/gitignore.ts";
 import { writeLock } from "../io/lock.ts";
 import { findRoot, paths } from "../io/paths.ts";
+import { cancelled } from "../io/prompts/confirm.ts";
 import { info, intro, note, outro } from "../io/ui.ts";
 import type { GlobalOpts } from "./context.ts";
 
@@ -16,8 +17,8 @@ export const DEFAULT_BANK = "Gods-Academy/skills";
 
 async function askRepo(yes: boolean): Promise<string> {
   if (yes) return DEFAULT_BANK;
-  const value = await p.text({ message: "Bank repo (owner/name)", initialValue: DEFAULT_BANK });
-  if (p.isCancel(value)) process.exit(130);
+  const value = await text({ message: "Bank repo (owner/name)", initialValue: DEFAULT_BANK });
+  if (isCancel(value)) cancelled();
   return value;
 }
 

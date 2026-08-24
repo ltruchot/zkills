@@ -13,12 +13,12 @@ test("readTree keeps exec bit and nested paths, writeTree round-trips", async ()
   await writeFile(join(dir, "a/scripts/run.sh"), "#!/bin/sh");
   await chmod(join(dir, "a/scripts/run.sh"), 0o755);
   const tree = await readTree(join(dir, "a"));
-  expect([...tree.keys()]).toEqual(["SKILL.md", "scripts/run.sh"]);
+  expect([...tree.keys()]).toStrictEqual(["SKILL.md", "scripts/run.sh"]);
   expect(tree.get("scripts/run.sh")?.mode).toBe(MODE_EXEC);
   expect(tree.get("SKILL.md")?.mode).toBe(MODE_FILE);
   await writeTree(join(dir, "b"), tree);
-  expect(await readTree(join(dir, "b"))).toEqual(tree);
-  expect(await listDirs(dir)).toEqual(["a", "b"]);
+  expect(await readTree(join(dir, "b"))).toStrictEqual(tree);
+  expect(await listDirs(dir)).toStrictEqual(["a", "b"]);
   await cleanup(dir);
 });
 

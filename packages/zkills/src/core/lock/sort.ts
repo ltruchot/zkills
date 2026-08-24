@@ -4,7 +4,7 @@ export function sortDeep<T>(value: T): T {
   if (value === null || typeof value !== "object") return value;
   const src = value as Record<string, unknown>;
   const out: Record<string, unknown> = {};
-  for (const key of Object.keys(src).sort()) out[key] = sortDeep(src[key]);
+  for (const key of Object.keys(src).toSorted()) out[key] = sortDeep(src[key]);
   return out as T;
 }
 

@@ -17,8 +17,8 @@ export async function fetchGithub(
   if (await exists(dir)) return { dir, sha: pinned };
   await downloadTemplate(`gh:${src.repo}/${src.path}#${pinned}`, {
     dir,
-    auth: token ?? undefined,
     force: true,
+    ...(token === null ? {} : { auth: token }),
   });
   return { dir, sha: pinned };
 }

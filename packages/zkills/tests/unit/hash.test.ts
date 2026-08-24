@@ -6,7 +6,7 @@ import { MODE_EXEC, MODE_FILE, type FileMap } from "../../src/core/types.ts";
 
 const buf = (s: string): Buffer => Buffer.from(s, "utf8");
 
-test("CRLF, CR and BOM normalize to same hash", () => {
+test("cRLF, CR and BOM normalize to same hash", () => {
   const lf = hashBytes(buf("a\nb\n"));
   expect(hashBytes(buf("a\r\nb\r\n"))).toBe(lf);
   expect(hashBytes(buf("a\rb\r"))).toBe(lf);
@@ -32,7 +32,7 @@ test("tree hash independent of insertion order", () => {
     ["b.md", { bytes: buf("b"), mode: MODE_FILE }],
     ["a.md", { bytes: buf("a"), mode: MODE_FILE }],
   ]);
-  const two: FileMap = new Map([...one].reverse());
+  const two: FileMap = new Map([...one].toReversed());
   expect(hashTree(one).tree).toBe(hashTree(two).tree);
-  expect(Object.keys(hashTree(one).files)).toEqual(["a.md", "b.md"]);
+  expect(Object.keys(hashTree(one).files)).toStrictEqual(["a.md", "b.md"]);
 });

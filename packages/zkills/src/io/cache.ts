@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 // ~/.cache/zkills or $XDG_CACHE_HOME/zkills
 export function cacheRoot(env: Record<string, string | undefined> = process.env): string {
-  const base = env.XDG_CACHE_HOME ?? join(homedir(), ".cache");
+  const base = env["XDG_CACHE_HOME"] ?? join(homedir(), ".cache");
   return join(base, "zkills");
 }
 
@@ -13,6 +13,6 @@ export function cachePath(
   sha: string,
   env?: Record<string, string | undefined>,
 ): string {
-  const safe = repo.replace(/[^\w.-]/g, "_");
+  const safe = repo.replaceAll(/[^\w.-]/g, "_");
   return join(cacheRoot(env), "github", safe, sha);
 }

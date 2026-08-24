@@ -7,6 +7,7 @@ catalogMode: prefer
 catalog:
   "@clack/prompts": 1.7.0
   "@types/node": 26.2.0
+  "@vitest/coverage-v8": 4.1.11
   cac: 7.0.0
   execa: 10.0.1
   giget: 3.3.1

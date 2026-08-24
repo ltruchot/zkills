@@ -8,13 +8,13 @@ import { formatFindings, jsonFindings } from "./findings.ts";
 type Opts = GlobalOpts & { portable?: boolean };
 
 // Bank CI gate: exit 1 on any error
-export async function runLint(dirs: string[], opts: Opts): Promise<void> {
+export async function runLint(dirs: string[], opts: Opts): Promise<number> {
   if (dirs.length === 0) fail("usage: zkills lint skills/*");
   const results: Record<string, Finding[]> = {};
   for (const dir of dirs) results[dir] = await lintSkill(dir, { portable: opts.portable === true });
-  if (opts.json === true) console.log(jsonFindings(results));
+  if (opts.json === true) print([jsonFindings(results)]);
   else for (const [dir, findings] of Object.entries(results)) print(formatFindings(dir, findings));
-  if (Object.values(results).some(hasErrors)) process.exitCode = 1;
+  return Object.values(results).some(hasErrors) ? 1 : 0;
 }
 
 export function register(cli: CAC): void {

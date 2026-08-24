@@ -12,6 +12,12 @@
 - Sentences under 15 words
 - README first, docs one topic each
 
+## Strictness
+
+- TypeScript: `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noPropertyAccessFromIndexSignature`, `erasableSyntaxOnly`
+- Oxlint: every category on, every plugin on, type-aware
+- Exceptions live in `lint/off-*.ts`, one reason per rule
+
 ## Code
 
 - One responsibility per file, split before 50

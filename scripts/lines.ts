@@ -4,7 +4,7 @@ import { join, relative } from "node:path";
 
 const MAX = 50;
 const ROOT = process.cwd();
-const SKIP_DIRS = new Set([".git", "node_modules", "dist", ".vite-hooks", ".cache"]);
+const SKIP_DIRS = new Set([".git", "node_modules", "dist", "coverage", ".vite-hooks", ".cache"]);
 const SKIP_FILES = new Set(["pnpm-lock.yaml", "LICENSE.md"]);
 const TEXT = /\.(ts|js|mjs|json|yaml|yml|md|txt|sh|gitignore|gitattributes)$/;
 

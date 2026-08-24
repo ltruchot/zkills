@@ -9,6 +9,12 @@ export default defineConfig({
     dts: false,
     exports: false,
   },
+  test: {
+    coverage: {
+      include: ["src/**"],
+      reporter: ["text-summary", "text"],
+    },
+  },
   lint: {
     options: {
       typeAware: true,

@@ -1,24 +1,15 @@
 import { splitAnswers } from "../core/answers/split.ts";
-import type { Skill } from "../core/bank/skill.ts";
-import type { LockEntry } from "../core/schema/lock.ts";
-import type { Answers } from "../core/types.ts";
-import { secretsFor, withSecrets } from "../io/local.ts";
+import { withSecrets } from "../io/local.ts";
 import { skillDir } from "../io/paths.ts";
 import { confirmOrYes } from "../io/prompts/confirm.ts";
 import { putTemplate } from "../io/template-cache.ts";
 import { info, print, success, warn } from "../io/ui.ts";
 import { entryFor } from "./add-entry.ts";
-import type { Found } from "./banks.ts";
+import { knownAnswers } from "./answers-known.ts";
 import type { Ctx } from "./context.ts";
 import { previewPlan } from "./preview.ts";
 import { applyPlan } from "./update-apply.ts";
-import { planUpdate } from "./update-plan.ts";
-
-export type UpdateInput = { found: Found; entry: LockEntry; base?: Skill; answers: Answers };
-
-export function knownAnswers(ctx: Ctx, name: string, entry: LockEntry): Answers {
-  return { ...entry.answers, ...secretsFor(ctx.local, name) };
-}
+import { planUpdate, type UpdateInput } from "./update-plan.ts";
 
 // Preview, confirm, apply, lock keeps pure render not disk
 export async function applyUpdate(ctx: Ctx, input: UpdateInput): Promise<boolean> {

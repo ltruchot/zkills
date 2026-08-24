@@ -1,12 +1,15 @@
-import * as p from "@clack/prompts";
+import { cancel, confirm, isCancel } from "@clack/prompts";
+import { CANCELLED, ZkillsError } from "../../core/errors.ts";
 
-// Skip prompt with --yes, exit on cancel
+export function cancelled(): never {
+  cancel("aborted");
+  throw new ZkillsError("aborted", CANCELLED);
+}
+
+// Skip prompt with --yes, abort on cancel
 export async function confirmOrYes(message: string, yes: boolean): Promise<boolean> {
   if (yes) return true;
-  const value = await p.confirm({ message });
-  if (p.isCancel(value)) {
-    p.cancel("aborted");
-    process.exit(130);
-  }
+  const value = await confirm({ message });
+  if (isCancel(value)) cancelled();
   return value;
 }

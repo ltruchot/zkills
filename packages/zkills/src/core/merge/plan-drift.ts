@@ -7,14 +7,14 @@ export type ActionKind = "write" | "merge" | "conflict" | "delete" | "keep";
 export type PlanAction = {
   rel: string;
   kind: ActionKind;
-  entry?: FileEntry;
-  rej?: Buffer;
-  reason?: string;
+  entry?: FileEntry | undefined;
+  rej?: Buffer | undefined;
+  reason?: string | undefined;
 };
 
 export type DriftInput = {
   rel: string;
-  base?: FileEntry;
+  base?: FileEntry | undefined;
   disk: FileEntry;
   theirs: FileEntry;
   mode: ConflictMode;

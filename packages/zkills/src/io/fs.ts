@@ -3,7 +3,7 @@ import { access, lstat, mkdir, readdir, readFile, rm, writeFile } from "node:fs/
 import { dirname, join, relative, sep } from "node:path";
 import { type FileMap, MODE_EXEC, MODE_FILE } from "../core/types.ts";
 
-export async function exists(path: string): Promise<boolean> {
+export function exists(path: string): Promise<boolean> {
   return access(path, constants.F_OK).then(
     () => true,
     () => false,
@@ -18,7 +18,7 @@ export async function readTree(dir: string): Promise<FileMap> {
 }
 
 async function walk(root: string, dir: string, out: FileMap): Promise<void> {
-  for (const name of (await readdir(dir)).sort()) {
+  for (const name of (await readdir(dir)).toSorted()) {
     const full = join(dir, name);
     const stat = await lstat(full);
     if (stat.isSymbolicLink()) throw new Error(`symlink refused: ${full}`);

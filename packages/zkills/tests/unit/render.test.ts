@@ -20,7 +20,7 @@ test("claude code syntax untouched", () => {
 });
 
 test("scanTokens finds uppercase tokens only", () => {
-  expect([...scanTokens("{{A}} {{B_2}} {{c}} {{A}}")]).toEqual(["A", "B_2"]);
+  expect([...scanTokens("{{A}} {{B_2}} {{c}} {{A}}")]).toStrictEqual(["A", "B_2"]);
 });
 
 test("renderTree drops manifest, keeps binaries", () => {

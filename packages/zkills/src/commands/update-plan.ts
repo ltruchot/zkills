@@ -5,7 +5,15 @@ import { renderTree } from "../core/render/tree.ts";
 import type { LockEntry } from "../core/schema/lock.ts";
 import type { Answers, FileMap } from "../core/types.ts";
 import { readSkillDisk } from "../io/skill-disk.ts";
+import type { Found } from "./banks.ts";
 import type { Ctx } from "./context.ts";
+
+export type UpdateInput = {
+  found: Found;
+  entry: LockEntry;
+  base?: Skill | undefined;
+  answers: Answers;
+};
 
 export type Planned = { plan: PlanAction[]; theirs: FileMap; disk: FileMap; idle: boolean };
 

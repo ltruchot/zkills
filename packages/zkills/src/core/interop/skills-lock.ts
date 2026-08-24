@@ -19,5 +19,5 @@ export async function readSkillsLock(root: string): Promise<External[]> {
   if (!parsed.success) return [];
   return Object.entries(parsed.data.skills)
     .map(([name, e]) => ({ name, source: e.source ?? "unknown" }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .toSorted((a, b) => a.name.localeCompare(b.name));
 }

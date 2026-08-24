@@ -1,11 +1,10 @@
 import { join } from "node:path";
 import { readSkill } from "../core/bank/index.ts";
-import type { Skill } from "../core/bank/skill.ts";
+import { type Skill, skillFromFiles } from "../core/bank/skill.ts";
 import type { LockEntry } from "../core/schema/lock.ts";
 import { resolveSource } from "../io/source.ts";
 import { getTemplate } from "../io/template-cache.ts";
 import { warn } from "../io/ui.ts";
-import { skillFromFiles } from "../core/bank/skill.ts";
 import type { Found } from "./banks.ts";
 import type { Ctx } from "./context.ts";
 

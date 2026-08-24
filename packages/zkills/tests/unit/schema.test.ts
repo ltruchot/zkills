@@ -7,7 +7,7 @@ test("valid manifest parses with defaults", () => {
   const m = parseManifest("version: 1\nplaceholders:\n  - name: A\n    prompt: a\n");
   expect(m.placeholders[0]?.type).toBe("string");
   expect(m.placeholders[0]?.secret).toBe(false);
-  expect(m.skipIfExists).toEqual([]);
+  expect(m.skipIfExists).toStrictEqual([]);
 });
 
 test("enum without options fails", () => {
@@ -18,12 +18,14 @@ test("enum without options fails", () => {
 test("duplicate and lowercase names fail", () => {
   const dup = "version: 1\nplaceholders:\n  - {name: A, prompt: a}\n  - {name: A, prompt: b}\n";
   expect(() => parseManifest(dup)).toThrow(/duplicate/);
-  expect(() => parseManifest("version: 1\nplaceholders:\n  - {name: a, prompt: a}\n")).toThrow();
+  expect(() => parseManifest("version: 1\nplaceholders:\n  - {name: a, prompt: a}\n")).toThrow(
+    /invalid/,
+  );
 });
 
 test("default config", () => {
   const c = defaultConfig("Gods-Academy/skills");
-  expect(c.sources[0]).toEqual({
+  expect(c.sources[0]).toStrictEqual({
     repo: "Gods-Academy/skills",
     ref: "main",
     path: "skills",
@@ -34,7 +36,7 @@ test("default config", () => {
 
 test("frontmatter split", () => {
   const fm = parseFrontmatter("---\nname: x\ndescription: y\n---\n# Body\n");
-  expect(fm.data).toEqual({ name: "x", description: "y" });
+  expect(fm.data).toStrictEqual({ name: "x", description: "y" });
   expect(fm.body).toBe("# Body\n");
-  expect(parseFrontmatter("# No fm\n").data).toEqual({});
+  expect(parseFrontmatter("# No fm\n").data).toStrictEqual({});
 });

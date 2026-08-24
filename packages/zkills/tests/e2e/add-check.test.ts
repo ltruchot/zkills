@@ -2,12 +2,14 @@ import { appendFile, copyFile, mkdir, readFile, writeFile } from "node:fs/promis
 import { join } from "node:path";
 import { expect, test } from "vite-plus/test";
 import { cli, FIXTURES, project } from "../helpers/cli.ts";
+import { parseAs, readLockFile, Rows } from "../helpers/json.ts";
 import { cleanup } from "../helpers/tmp.ts";
 
 const ANSWERS = { ZKILLS_ANSWER_PROJECT_NAME: "Acme" };
 
 test("init, add, check, list, drift, remove", async () => {
   const dir = await project("bank-v1");
+  const lockPath = join(dir, ".claude/zkills.lock.json");
   await mkdir(join(dir, ".claude/skills/manual"), { recursive: true });
   await writeFile(join(dir, ".claude/skills/manual/SKILL.md"), "hand written");
   await copyFile(join(FIXTURES, "skills-lock.json"), join(dir, "skills-lock.json"));
@@ -15,23 +17,22 @@ test("init, add, check, list, drift, remove", async () => {
   expect((await cli(dir, ["init", "-y"])).code).toBe(0);
   expect(await readFile(join(dir, ".claude/.gitignore"), "utf8")).toContain("zkills.local.json");
 
-  const add = await cli(dir, ["add", "hello", "-y"], ANSWERS);
-  expect(add.code, add.out).toBe(0);
+  expect((await cli(dir, ["add", "hello", "-y"], ANSWERS)).code).toBe(0);
   const skill = await readFile(join(dir, ".claude/skills/hello/SKILL.md"), "utf8");
   expect(skill).toContain("Project: Acme");
   expect(skill).toContain("Repo: Gods-Academy/example");
   expect(skill).toContain("{{NOT_DECLARED}}");
   expect(skill).toContain("$ARGUMENTS");
-  const lock = JSON.parse(await readFile(join(dir, ".claude/zkills.lock.json"), "utf8"));
-  expect(lock.skills.hello.answers).toEqual({
+  const entry = (await readLockFile(lockPath)).skills["hello"];
+  expect(entry?.answers).toStrictEqual({
     GITHUB_REPO: "Gods-Academy/example",
     PROJECT_NAME: "Acme",
   });
-  expect(lock.skills.hello.sha).toMatch(/^local:/);
+  expect(entry?.sha).toMatch(/^local:/);
 
   expect((await cli(dir, ["check"])).code).toBe(0);
-  const list = JSON.parse((await cli(dir, ["list", "--json"])).out);
-  expect(list.map((r: { name: string; status: string }) => `${r.name}=${r.status}`)).toEqual([
+  const list = parseAs(Rows, (await cli(dir, ["list", "--json"])).out);
+  expect(list.map((r) => `${r.name}=${r.status}`)).toStrictEqual([
     "hello=up to date",
     "manual=unmanaged, hand-written",
     "angular-developer=external, unmanaged, review manually",
@@ -42,9 +43,7 @@ test("init, add, check, list, drift, remove", async () => {
 
   expect((await cli(dir, ["remove", "manual", "-y"])).code).toBe(1);
   expect((await cli(dir, ["remove", "hello", "-y"])).code).toBe(0);
-  expect(JSON.parse(await readFile(join(dir, ".claude/zkills.lock.json"), "utf8")).skills).toEqual(
-    {},
-  );
+  expect((await readLockFile(lockPath)).skills).toStrictEqual({});
   expect((await cli(dir, ["add", "hello", "-y"], {})).code).toBe(1);
   await cleanup(dir);
-}, 60_000);
+});

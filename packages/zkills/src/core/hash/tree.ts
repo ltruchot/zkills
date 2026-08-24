@@ -3,8 +3,9 @@ import { hashEntry, sha256 } from "./file.ts";
 
 export type TreeHash = { tree: string; files: Record<string, string> };
 
+// Byte order, not locale order, for cross-platform determinism
 export function sortedPaths(files: FileMap): string[] {
-  return [...files.keys()].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+  return [...files.keys()].toSorted((a, b) => (a < b ? -1 : Number(a > b)));
 }
 
 // Deterministic hash over sorted entries

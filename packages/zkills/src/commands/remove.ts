@@ -20,7 +20,7 @@ export async function runRemove(names: string[], opts: GlobalOpts): Promise<void
   if (!(await confirmOrYes(`Remove ${names.join(", ")}?`, ctx.yes))) return;
   for (const name of names) {
     await rmDir(skillDir(ctx.p, name));
-    delete ctx.lock.skills[name];
+    Reflect.deleteProperty(ctx.lock.skills, name);
     ctx.local = withSecrets(ctx.local, name, {});
     await removeLines(ctx.p.claudeGitignore, [`skills/${name}/`]);
     success(`${name} removed`);

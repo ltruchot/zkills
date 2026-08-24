@@ -5,7 +5,6 @@ import { TOKEN } from "./tokens.ts";
 export function renderText(text: string, answers: Answers, declared: Set<string>): string {
   return text.replace(TOKEN, (whole: string, name: string) => {
     if (!declared.has(name)) return whole;
-    const value = answers[name];
-    return value === undefined ? whole : value;
+    return answers[name] ?? whole;
   });
 }

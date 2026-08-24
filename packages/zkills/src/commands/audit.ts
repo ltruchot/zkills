@@ -9,7 +9,7 @@ import { type GlobalOpts, loadContext } from "./context.ts";
 import { formatFindings, jsonFindings } from "./findings.ts";
 
 // Offline scan, default = managed skills of this project
-export async function runAudit(dirs: string[], opts: GlobalOpts): Promise<void> {
+export async function runAudit(dirs: string[], opts: GlobalOpts): Promise<number> {
   let targets = dirs;
   if (targets.length === 0) {
     const ctx = await loadContext(opts);
@@ -17,9 +17,9 @@ export async function runAudit(dirs: string[], opts: GlobalOpts): Promise<void> 
   }
   const results: Record<string, Finding[]> = {};
   for (const dir of targets) results[dir] = await scanDir(dir);
-  if (opts.json === true) console.log(jsonFindings(results));
+  if (opts.json === true) print([jsonFindings(results)]);
   else for (const [dir, findings] of Object.entries(results)) print(formatFindings(dir, findings));
-  if (Object.values(results).some(hasErrors)) process.exitCode = 1;
+  return Object.values(results).some(hasErrors) ? 1 : 0;
 }
 
 export function register(cli: CAC): void {

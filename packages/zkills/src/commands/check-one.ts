@@ -38,5 +38,5 @@ export async function checkOne(
   if (await exists(join(homedir(), ".claude", "skills", name))) {
     warn(`~/.claude/skills/${name} shadows the project skill`);
   }
-  return statuses.filter((s, i, all) => s !== "ok" || all.length === 1);
+  return statuses.filter((s, _i, all) => s !== "ok" || all.length === 1);
 }

@@ -5,7 +5,8 @@ import { collectAnswers } from "./add-prompts.ts";
 import { type Bank, findSkill } from "./banks.ts";
 import type { Ctx } from "./context.ts";
 import { baseSkill } from "./update-base.ts";
-import { applyUpdate, knownAnswers } from "./update-one.ts";
+import { knownAnswers } from "./answers-known.ts";
+import { applyUpdate } from "./update-one.ts";
 
 // Update one managed skill and persist lock + secrets
 export async function updateName(

@@ -5,7 +5,7 @@ const XML = /<[a-zA-Z/][^>]*>/;
 
 // 1..1024 chars, no XML tags
 export function lintDescription(skill: Skill): Finding[] {
-  const value = skill.frontmatter.data.description;
+  const value = skill.frontmatter.data["description"];
   const error = (msg: string): Finding[] => [
     { rule: "description", level: "error", file: "SKILL.md", msg },
   ];

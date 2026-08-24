@@ -8,5 +8,5 @@ export async function listDirs(dir: string): Promise<string[]> {
   return entries
     .filter((e) => e.isDirectory() || e.isSymbolicLink())
     .map((e) => e.name)
-    .sort();
+    .toSorted();
 }

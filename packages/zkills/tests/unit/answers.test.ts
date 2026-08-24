@@ -12,11 +12,11 @@ const decl = (extra: object): Placeholder =>
   Placeholder.parse({ name: "X", prompt: "x", ...extra });
 
 test("split public and secret", () => {
-  expect(splitAnswers(manifest, { A: "1", S: "2" })).toEqual({
+  expect(splitAnswers(manifest, { A: "1", S: "2" })).toStrictEqual({
     public: { A: "1" },
     secret: { S: "2" },
   });
-  expect(secretNames(manifest)).toEqual(["S"]);
+  expect(secretNames(manifest)).toStrictEqual(["S"]);
 });
 
 test("validate by type", () => {
@@ -31,9 +31,9 @@ test("validate by type", () => {
 });
 
 test("missing and defaults", () => {
-  expect(missingPlaceholders(manifest, {}).map((p) => p.name)).toEqual(["A", "S"]);
-  expect(applyDefaults(manifest, {})).toEqual({ A: "da" });
-  expect(missingPlaceholders(manifest, applyDefaults(manifest, {})).map((p) => p.name)).toEqual([
-    "S",
-  ]);
+  expect(missingPlaceholders(manifest, {}).map((p) => p.name)).toStrictEqual(["A", "S"]);
+  expect(applyDefaults(manifest, {})).toStrictEqual({ A: "da" });
+  expect(
+    missingPlaceholders(manifest, applyDefaults(manifest, {})).map((p) => p.name),
+  ).toStrictEqual(["S"]);
 });

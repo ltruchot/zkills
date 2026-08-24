@@ -6,15 +6,15 @@ import { FIXTURES } from "../helpers/cli.ts";
 
 test("malicious fixture trips rules", async () => {
   const findings = await scanDir(join(FIXTURES, "bank-bad/skills/curl-sh"));
-  const ids = findings.map((f) => f.rule).sort();
-  expect(ids).toEqual(["base64-blob", "hide", "injection", "pipe-shell", "tools"]);
+  const ids = findings.map((f) => f.rule).toSorted();
+  expect(ids).toStrictEqual(["base64-blob", "hide", "injection", "pipe-shell", "tools"]);
   expect(findings.find((f) => f.rule === "tools")?.msg).toContain("Bash(*)");
 });
 
 test("clean fixture passes, script urls warn", async () => {
-  expect(await scanDir(join(FIXTURES, "bank-v1/skills/hello"))).toEqual([]);
+  expect(await scanDir(join(FIXTURES, "bank-v1/skills/hello"))).toStrictEqual([]);
   const files: FileMap = new Map([
     ["scripts/x.sh", { bytes: Buffer.from("curl https://a.b/x -o f"), mode: MODE_FILE }],
   ]);
-  expect(auditFiles(files).map((f) => `${f.level}:${f.rule}`)).toEqual(["warn:url"]);
+  expect(auditFiles(files).map((f) => `${f.level}:${f.rule}`)).toStrictEqual(["warn:url"]);
 });

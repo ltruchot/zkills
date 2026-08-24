@@ -1,4 +1,5 @@
 import { defineConfig } from "vite-plus";
+import { lint } from "./lint/index.ts";
 
 // Fixtures are test data: never format, never lint
 const fixtures = ["packages/zkills/tests/fixtures/**"];
@@ -8,12 +9,7 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   fmt: { ignorePatterns: fixtures },
-  lint: {
-    ignorePatterns: fixtures,
-    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
-    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
-    options: { typeAware: true, typeCheck: true },
-  },
+  lint,
   run: {
     cache: true,
     tasks: {

@@ -1,5 +1,10 @@
 import type { Placeholder } from "../schema/placeholder.ts";
 
+function matchPattern(decl: Placeholder, value: string): string | null {
+  if (decl.pattern === undefined) return null;
+  return new RegExp(decl.pattern).test(value) ? null : `must match ${decl.pattern}`;
+}
+
 // Null = valid, string = error message
 export function validateAnswer(decl: Placeholder, value: string): string | null {
   if (value.length === 0) return "value required";
@@ -10,15 +15,12 @@ export function validateAnswer(decl: Placeholder, value: string): string | null 
     case "boolean":
       return value === "true" || value === "false" ? null : "true or false";
     case "enum":
-      return decl.options?.includes(value) ? null : `one of ${decl.options?.join(", ")}`;
+      return decl.options?.includes(value) === true ? null : `one of ${decl.options?.join(", ")}`;
     case "path":
       return value.includes("\0") ? "invalid path" : matchPattern(decl, value);
-    default:
+    case "string":
       return matchPattern(decl, value);
+    default:
+      return null;
   }
-}
-
-function matchPattern(decl: Placeholder, value: string): string | null {
-  if (decl.pattern === undefined) return null;
-  return new RegExp(decl.pattern).test(value) ? null : `must match ${decl.pattern}`;
 }

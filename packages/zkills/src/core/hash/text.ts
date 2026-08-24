@@ -10,7 +10,7 @@ export function isText(bytes: Buffer): boolean {
 // Strip BOM, CRLF and CR → LF
 export function normalizeLf(bytes: Buffer): Buffer {
   const noBom = bytes.subarray(0, 3).equals(BOM) ? bytes.subarray(3) : bytes;
-  const text = noBom.toString("utf8").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  const text = noBom.toString("utf8").replaceAll("\r\n", "\n").replaceAll("\r", "\n");
   return Buffer.from(text, "utf8");
 }
 

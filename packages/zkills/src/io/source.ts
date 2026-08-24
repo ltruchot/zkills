@@ -3,7 +3,7 @@ import { fetchGithub } from "./source-github.ts";
 import { fetchLocal, type Resolved } from "./source-local.ts";
 
 // Resolve a config source to a bank dir, optionally at a known sha
-export async function resolveSource(
+export function resolveSource(
   src: Source,
   token: string | null,
   root: string,

@@ -7,9 +7,9 @@ import type { Status } from "./buckets.ts";
 export type StatusInput = {
   entry: LockEntry;
   disk: FileMap | null;
-  configRef?: string;
-  bankTemplateHash?: string;
-  frozenRenderedHash?: string;
+  configRef?: string | undefined;
+  bankTemplateHash?: string | undefined;
+  frozenRenderedHash?: string | undefined;
 };
 
 // Statuses for one managed skill, ["ok"] when clean

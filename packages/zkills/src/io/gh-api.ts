@@ -10,7 +10,7 @@ export function isSha(ref: string): boolean {
 export async function resolveSha(repo: string, ref: string, token: string | null): Promise<string> {
   if (isSha(ref)) return ref;
   const headers: Record<string, string> = { Accept: "application/vnd.github.sha" };
-  if (token !== null) headers.Authorization = `Bearer ${token}`;
+  if (token !== null) headers["Authorization"] = `Bearer ${token}`;
   const res = await fetch(`${API}/repos/${repo}/commits/${encodeURIComponent(ref)}`, { headers });
   if (!res.ok) throw new Error(`github ${res.status} for ${repo}@${ref}`);
   const sha = (await res.text()).trim();

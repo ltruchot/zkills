@@ -5,8 +5,8 @@ import { hasConflictMarkers, mergeThreeWay } from "../../src/core/merge/three-wa
 
 test("classify buckets", () => {
   expect(classifyFile(undefined, undefined, "t")).toBe("missing");
-  expect(classifyFile(undefined, "d", undefined)).toBe("extra");
-  expect(classifyFile("l", "l", undefined)).toBe("removed");
+  expect(classifyFile(undefined, "d")).toBe("extra");
+  expect(classifyFile("l", "l")).toBe("removed");
   expect(classifyFile("l", "l", "t")).toBe("same");
   expect(classifyFile("l", "d", "t")).toBe("drift");
 });

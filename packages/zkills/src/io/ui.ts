@@ -1,37 +1,38 @@
-import * as p from "@clack/prompts";
+import { intro as clackIntro, log, note as clackNote, outro as clackOutro } from "@clack/prompts";
 import pc from "picocolors";
+import { ZkillsError } from "../core/errors.ts";
 
-export const intro = (title: string): void => p.intro(pc.bgCyan(pc.black(` ${title} `)));
-export const outro = (msg: string): void => p.outro(msg);
-export const info = (msg: string): void => p.log.info(msg);
-export const warn = (msg: string): void => p.log.warn(pc.yellow(msg));
-export const success = (msg: string): void => p.log.success(msg);
-export const step = (msg: string): void => p.log.step(msg);
-export const note = (lines: string[], title?: string): void => p.note(lines.join("\n"), title);
+export const intro = (title: string): void => {
+  clackIntro(pc.bgCyan(pc.black(` ${title} `)));
+};
+export const outro = (msg: string): void => {
+  clackOutro(msg);
+};
+export const info = (msg: string): void => {
+  log.info(msg);
+};
+export const warn = (msg: string): void => {
+  log.warn(pc.yellow(msg));
+};
+export const success = (msg: string): void => {
+  log.success(msg);
+};
+export const step = (msg: string): void => {
+  log.step(msg);
+};
+export const note = (lines: string[], title?: string): void => {
+  clackNote(lines.join("\n"), title);
+};
 
 export function fail(msg: string): never {
-  p.log.error(pc.red(msg));
-  process.exit(1);
+  throw new ZkillsError(msg);
 }
 
-// Spinner frames flood CI logs, plain step when not a TTY
-export async function spin<T>(label: string, fn: () => Promise<T>): Promise<T> {
-  if (!process.stdout.isTTY) {
-    step(label);
-    return fn();
-  }
-  const s = p.spinner();
-  s.start(label);
-  try {
-    const result = await fn();
-    s.stop(label);
-    return result;
-  } catch (error) {
-    s.stop(pc.red(label));
-    throw error;
-  }
-}
-
+// Bypass console: vitest swallows it, stdout.write stays capturable
 export function print(lines: string[]): void {
-  for (const line of lines) console.log(line);
+  for (const line of lines) process.stdout.write(`${line}\n`);
+}
+
+export function printErr(msg: string): void {
+  process.stderr.write(`${msg}\n`);
 }

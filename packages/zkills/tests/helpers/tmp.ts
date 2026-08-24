@@ -2,7 +2,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-export async function tmpDir(prefix = "zkills-"): Promise<string> {
+export function tmpDir(prefix = "zkills-"): Promise<string> {
   return mkdtemp(join(tmpdir(), prefix));
 }
 

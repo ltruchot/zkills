@@ -4,6 +4,7 @@ import { register as answers } from "./answers.ts";
 import { register as audit } from "./audit.ts";
 import { register as check } from "./check.ts";
 import { register as doctor } from "./doctor.ts";
+import { attachExamples } from "./examples.ts";
 import { register as info } from "./info.ts";
 import { register as init } from "./init.ts";
 import { register as lint } from "./lint.ts";
@@ -29,4 +30,5 @@ const COMMANDS = [
 
 export function registerAll(cli: CAC): void {
   for (const register of COMMANDS) register(cli);
+  attachExamples(cli);
 }

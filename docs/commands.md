@@ -1,49 +1,40 @@
 # Commands
 
-## Global flags
+- `zkills <command> --help` prints flags and examples
+- Global: `--cwd <dir>`, `-y` no prompts, `--json`, `--dry-run` writes nothing
 
-- `--cwd <dir>` project dir, default cwd, walks up to config or `.git`
-- `-y, --yes` no prompts, fails on missing answers
-- `--json` machine output for `list`, `info`, `lint`, `audit`
-- `--dry-run` preview only, `add`, `update`, `remove` write nothing
+| Command          | Does                                                                         | Exit                              |
+| ---------------- | ---------------------------------------------------------------------------- | --------------------------------- |
+| `init [repo]`    | config from arg, preset or prompt; lock; `.claude/.gitignore`; skills dir    | 0                                 |
+| `info`           | flavor, sources, effective policy, links, notes                              | 0                                 |
+| `list`           | bank skills with status, orphans, hand-written dirs, skills.sh externals     | 0                                 |
+| `add [names]`    | prompt placeholders, preview, atomic write, lock; no names = restore missing | 1 on refusal                      |
+| `update [names]` | 3-way merge, keeps local edits, prompts new placeholders                     | 1 on refusal                      |
+| `remove <names>` | managed only: backup, dir, lock, secrets, gitignore line                     | 1 if unmanaged                    |
+| `check`          | status per skill                                                             | 0 ok, 1 update, 2 drift, 3 tamper |
+| `doctor`         | token, gitignore, secrets, disk state, shadowing, fixes in messages          | 1 on error                        |
+| `repair [names]` | rebuild from lock, `--from-backup` restores last state                       | 1 on failure                      |
+| `answers <name>` | show values, secrets masked, `--edit` re-renders                             | 1 if unmanaged                    |
+| `lint <dirs>`    | spec rules, `--portable` = 6 open-spec keys                                  | 1 on error                        |
+| `audit [dirs]`   | offline danger scan, default = managed skills                                | 1 on error                        |
 
-## init [repo]
+## Flags
 
-- Writes config (arg, else preset, else prompt), lock, `.claude/.gitignore`, `.claude/skills`
+- `add --force` replaces an unmanaged dir of same name
+- `update --force` re-renders when template unchanged, `--external` runs `npx skills update`
+- `check --frozen` re-renders template with lock answers, mismatch = tamper; `--offline` skips fetch
+- `lint --portable` rejects Claude Code only frontmatter keys
 
-## info
+## Env
 
-- Flavor, config path, cache, offline flag, sources, effective policy, links, notes
+- `ZKILLS_ANSWER_<NAME>` answers a placeholder without prompt
+- `ZKILLS_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN`, else `gh auth token`
+- `ZKILLS_OFFLINE=1` forbids network, cache only
+- `ZKILLS_PRESET=<file.json>` loads a preset without a flavor build
+- `XDG_CACHE_HOME` moves cache and backups
 
-## list
+## Safety
 
-- Bank skills with status, orphans, hand-written dirs, skills.sh externals
-
-## add [names...]
-
-- Prompts declared placeholders, env `ZKILLS_ANSWER_<NAME>` wins
-- Shows files and `SKILL.md` diff, asks before writing
-- No names = restore locked skills missing on disk
-- `--force` replaces an unmanaged dir of same name
-
-## update [names...]
-
-- Skips when template hash unchanged, `--force` re-renders
-- Prompts new placeholders only
-- 3-way merge per file, see [update.md](update.md)
-- `--external` runs `npx skills update` after warning
-
-## remove <names...>, check
-
-- `remove` managed only: dir, lock entry, secrets, gitignore line
-
-- `check` exit 0 ok, 1 update or wrong ref, 2 drift or missing, 3 tamper
-- `--frozen` re-renders template with lock answers, mismatch = tamper
-- `--offline` skips bank fetch
-- Warns when `~/.claude/skills/<name>` shadows the project skill
-
-## answers, lint, audit
-
-- `answers <name> [--edit]` shows values, secrets masked, re-renders on edit
-- `lint <dirs...> [--portable]` spec rules, exit 1 on error
-- `audit [dirs...]` offline scan, default = managed skills, exit 1 on error
+- Every write goes to a work dir then one rename, previous state backed up
+- Names validated on every argument and lock key, no path can escape `.claude/skills`
+- Writes only under `.claude/`, `zkills.config.json` and the cache dir

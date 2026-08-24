@@ -7,25 +7,25 @@ import { fail } from "../io/ui.ts";
 
 export const ENV_PREFIX = "ZKILLS_ANSWER_";
 
-// Known → defaults → env → prompt, one placeholder at a time
+// Lock → env → default → prompt, one placeholder at a time
 export async function collectAnswers(
   manifest: Manifest,
   known: Answers,
   yes: boolean,
   env: Record<string, string | undefined> = process.env,
 ): Promise<Answers> {
-  const answers = applyDefaults(manifest, known);
+  const answers: Answers = { ...known };
   for (const decl of missingPlaceholders(manifest, answers)) {
     const fromEnv = env[`${ENV_PREFIX}${decl.name}`];
-    if (fromEnv !== undefined) {
-      const error = validateAnswer(decl, fromEnv);
-      if (error !== null) fail(`${decl.name}: ${error}`);
-      answers[decl.name] = fromEnv;
-    } else if (yes) {
-      fail(`missing answer for ${decl.name}, set ${ENV_PREFIX}${decl.name}`);
-    } else {
-      answers[decl.name] = await askPlaceholder(decl);
-    }
+    if (fromEnv === undefined) continue;
+    const error = validateAnswer(decl, fromEnv);
+    if (error !== null) fail(`${decl.name}: ${error}`);
+    answers[decl.name] = fromEnv;
   }
-  return answers;
+  const filled = applyDefaults(manifest, answers);
+  for (const decl of missingPlaceholders(manifest, filled)) {
+    if (yes) fail(`missing answer for ${decl.name}, set ${ENV_PREFIX}${decl.name}`);
+    filled[decl.name] = await askPlaceholder(decl);
+  }
+  return filled;
 }

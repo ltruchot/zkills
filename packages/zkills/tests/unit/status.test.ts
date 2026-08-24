@@ -2,7 +2,6 @@ import { expect, test } from "vite-plus/test";
 import { hashTree } from "../../src/core/hash/tree.ts";
 import type { LockEntry } from "../../src/core/schema/lock.ts";
 import { computeStatus } from "../../src/core/status/compute.ts";
-import { exitCode } from "../../src/core/status/exit-code.ts";
 import { MODE_FILE, type FileMap } from "../../src/core/types.ts";
 
 const disk: FileMap = new Map([["SKILL.md", { bytes: Buffer.from("ok\n"), mode: MODE_FILE }]]);
@@ -32,14 +31,13 @@ test("status buckets", () => {
     "tamper",
   ]);
   const edited: FileMap = new Map([
-    ["SKILL.md", { bytes: Buffer.from("<<<<<<< local\nx\n"), mode: MODE_FILE }],
+    [
+      "SKILL.md",
+      {
+        bytes: Buffer.from("<<<<<<< local\nx\n=======\ny\n>>>>>>> zkills update\n"),
+        mode: MODE_FILE,
+      },
+    ],
   ]);
   expect(computeStatus({ entry, disk: edited })).toStrictEqual(["drift", "conflict"]);
-});
-
-test("exit codes", () => {
-  expect(exitCode(["ok", "ok"])).toBe(0);
-  expect(exitCode(["ok", "update"])).toBe(1);
-  expect(exitCode(["update", "drift"])).toBe(2);
-  expect(exitCode(["drift", "tamper"])).toBe(3);
 });

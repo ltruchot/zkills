@@ -14,8 +14,7 @@ export function mergeThreeWay(base: string, ours: string, theirs: string): Merge
   return { text: res.result.join("\n"), conflict: res.conflict };
 }
 
-export const CONFLICT_MARK = /^<{7} /m;
-
+// All three markers must be present, a doc quoting one marker is not a conflict
 export function hasConflictMarkers(text: string): boolean {
-  return CONFLICT_MARK.test(text);
+  return /^<{7} /m.test(text) && /^={7}$/m.test(text) && /^>{7} /m.test(text);
 }

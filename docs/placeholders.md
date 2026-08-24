@@ -9,7 +9,7 @@
 ## Flow
 
 - `add` reads `zkills.yaml`, asks each missing placeholder once
-- Defaults fill first, env `ZKILLS_ANSWER_<NAME>` second, prompt last
+- Order: lock answers, then env `ZKILLS_ANSWER_<NAME>`, then `default`, then prompt
 - `-y` fails on a missing answer instead of prompting
 - Values validated: url parses, enum in options, pattern matches
 - Value containing `${CLAUDE_` rejected

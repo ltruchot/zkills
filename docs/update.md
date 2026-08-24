@@ -23,6 +23,12 @@
 - Text drift → `node-diff3` merge base, disk, theirs
 - Clean merge → write; conflict → per mode
 
+## Safety
+
+- Previous dir copied to `~/.cache/zkills/backup/<project>/<name>` before any write
+- Merge applied in a work dir, swapped in with one rename
+- `zkills repair --from-backup` undoes the last write
+
 ## Lock after update
 
 - `files` and `renderedHash` = pure `theirs`, never disk

@@ -27,6 +27,12 @@ vp run ready      # all of the above + build
 - answers --edit re-renders, edit survives
 - remove refuses unmanaged, removes managed
 
+## Guarantees under test
+
+- Write allowlist: only `.claude/**`, `zkills.config.json` and the cache change
+- Traversal names rejected on every command and in the lock
+- Atomic swap keeps the old dir when a write fails
+
 ## Env in tests
 
 - `ZKILLS_ANSWER_<NAME>` feeds prompts

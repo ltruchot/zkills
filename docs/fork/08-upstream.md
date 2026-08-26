@@ -16,6 +16,7 @@ vp check && vp run lines && vp run -r test && vp run -r build && vp run packchec
 
 - Conflicts expected in `README.md`, `packages/zkills/package.json`, `release.yml`, docs
 - Keep yours on branding, take theirs on `src/` unless customized
+- Rebrand touches 3 files only: `flavor/preset.json`, `package.json`, `release.yml`
 - Bump patch version, tag, release
 
 ## Compatibility

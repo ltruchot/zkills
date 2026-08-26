@@ -22,7 +22,8 @@ cp flavor/preset.example.json flavor/preset.json
 - `bin`: `{ "acme-skills": "dist/cli.js" }`
 - `description`, `homepage`, `bugs`, `repository`: internal URLs
 - `publishConfig`: `{ "registry": "https://npm.pkg.github.com", "access": "restricted" }`
-- `version`: keep upstream number, bump patch on own changes
+- `version`: bump above every mirrored tag, else the release tag collides
+- `vp check --fix` after editing, oxfmt owns json formatting
 
 ## Prove
 

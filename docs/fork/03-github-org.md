@@ -16,6 +16,7 @@ git push -u origin main --tags
 ```
 
 - `upstream` remote stays on maintainer laptop, never written in repo
+- `--tags` copies upstream tags, first own release must bump above the highest one
 
 ## Protect
 

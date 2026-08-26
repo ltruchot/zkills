@@ -7,6 +7,7 @@ import type { Ctx } from "./context.ts";
 import { baseSkill } from "./update-base.ts";
 import { knownAnswers } from "./answers-known.ts";
 import { applyUpdate } from "./update-one.ts";
+import { tool } from "./intro.ts";
 
 // Update one managed skill and persist lock + secrets
 export async function updateName(
@@ -16,7 +17,7 @@ export async function updateName(
   force: boolean,
 ): Promise<void> {
   const entry = ctx.lock.skills[name];
-  if (entry === undefined) fail(`${name} is not managed, use zkills add`);
+  if (entry === undefined) fail(`${name} is not managed, use ${tool()} add`);
   const found = findSkill(banks, name);
   if (found === undefined) fail(`${name}: gone from bank, remove it or keep as is`);
   if (found.skill.templateHash === entry.templateHash && !force) {

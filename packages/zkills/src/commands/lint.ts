@@ -4,12 +4,13 @@ import type { Finding } from "../core/types.ts";
 import { fail, print } from "../io/ui.ts";
 import type { GlobalOpts } from "./context.ts";
 import { formatFindings, jsonFindings } from "./findings.ts";
+import { tool } from "./intro.ts";
 
 type Opts = GlobalOpts & { portable?: boolean };
 
 // Bank CI gate: exit 1 on any error
 export async function runLint(dirs: string[], opts: Opts): Promise<number> {
-  if (dirs.length === 0) fail("usage: zkills lint skills/*");
+  if (dirs.length === 0) fail(`usage: ${tool()} lint skills/*`);
   const results: Record<string, Finding[]> = {};
   for (const dir of dirs) results[dir] = await lintSkill(dir, { portable: opts.portable === true });
   if (opts.json === true) print([jsonFindings(results)]);

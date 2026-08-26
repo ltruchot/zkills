@@ -3,13 +3,21 @@ import { SourceType } from "./lock.ts";
 
 export const CONFIG_FILE = "zkills.config.json";
 
-export const Source = z.object({
-  repo: z.string().min(1),
-  ref: z.string().min(1).default("main"),
-  path: z.string().min(1).default("skills"),
-  type: SourceType.default("github"),
-  host: z.string().min(1).default("github.com"),
-});
+// owner/name, no dot segments; host is a bare hostname with optional port
+export const GITHUB_REPO = /^(?!\.{1,2}\/)[\w.-]+\/(?!\.{1,2}$)[\w.-]+$/;
+export const HOST = /^[a-z0-9]([a-z0-9.-]*[a-z0-9])?(:\d+)?$/;
+
+export const Source = z
+  .object({
+    repo: z.string().min(1),
+    ref: z.string().min(1).default("main"),
+    path: z.string().min(1).default("skills"),
+    type: SourceType.default("github"),
+    host: z.string().regex(HOST).default("github.com"),
+  })
+  .refine((s) => s.type !== "github" || GITHUB_REPO.test(s.repo), {
+    message: "github repo must be owner/name",
+  });
 
 export const ConflictMode = z.enum(["inline", "rej", "ours", "theirs"]);
 

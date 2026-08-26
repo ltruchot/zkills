@@ -15,6 +15,7 @@
 - Atomic writes with backup, `doctor` and `repair`
 - Diff preview before every write, `--dry-run`
 - No telemetry, no third-party endpoint, `ZKILLS_OFFLINE` hard stop
+- Token follows trusted hosts only, see [auth.md](auth.md)
 
 ## Audit rules
 
@@ -26,9 +27,9 @@
 
 ## Registry
 
-- `zkills` is public on npm, owned by ltruchot, name reserved against squatting
+- `zkills` public on npm, name reserved against squatting
 - Package holds no secrets, no org name, no bank, zero dependencies
-- Published by GitHub Actions through npm trusted publishing, provenance attached
+- Published by GitHub Actions through npm trusted publishing, provenance attached, tag must match version
 - Enterprises fork the source and publish their own package, see [enterprise.md](enterprise.md)
 
 ## Claude Code knobs

@@ -8,6 +8,7 @@ import { secretsFor } from "../io/local.ts";
 import { readSkillDisk } from "../io/skill-disk.ts";
 import type { Ctx } from "./context.ts";
 import { finding } from "./doctor-project.ts";
+import { tool } from "./intro.ts";
 
 // Per-skill checks: disk state, secrets presence, backup availability
 export async function skillChecks(ctx: Ctx): Promise<Finding[]> {
@@ -18,8 +19,8 @@ export async function skillChecks(ctx: Ctx): Promise<Finding[]> {
     for (const s of computeStatus({ entry, disk: await readSkillDisk(ctx.p, name) })) {
       if (s === "ok") continue;
       const fix = (await hasBackup(ctx.p, name))
-        ? "zkills repair or repair --from-backup"
-        : "zkills repair";
+        ? `${tool()} repair or repair --from-backup`
+        : `${tool()} repair`;
       out.push(
         finding(s, s === "missing" ? "error" : "warn", `${name}: ${STATUS_LABEL[s]}, ${fix}`),
       );
@@ -31,7 +32,7 @@ export async function skillChecks(ctx: Ctx): Promise<Finding[]> {
           finding(
             "secret",
             "error",
-            `${name}: secret ${key} missing in ${LOCAL_FILE}, zkills answers ${name} --edit`,
+            `${name}: secret ${key} missing in ${LOCAL_FILE}, ${tool()} answers ${name} --edit`,
           ),
         );
     }

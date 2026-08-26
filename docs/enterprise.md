@@ -3,17 +3,10 @@
 ## Model
 
 - Public `zkills` = name reservation + white-label source, nothing more
-- Your fork = the real tool: own name, own registry, own bank, baked rules
-- Fork never depends on the public package, `dist/cli.js` is one self-contained file
-- Public package can vanish, your fork keeps working with the same guarantees
-
-## Fork in five steps
-
-- Fork or mirror `ltruchot/zkills` into your org, private
-- `cp flavor/preset.example.json flavor/preset.json`, fill bank, policy, links, notes
-- `packages/zkills/package.json`: `name` `@acme/zkills`, `publishConfig.registry`
-- `vp run ready` (includes `packcheck` and `flavorcheck`)
-- Tag, `release.yml` publishes to your registry with your token
+- Fork = real tool: own name, own registry, own bank, baked rules
+- Fork never depends on public package, `dist/cli.js` one self-contained file
+- Consumers see internal tool from internal registry, upstream never mentioned
+- Step-by-step: [fork/README.md](fork/README.md)
 
 ## Consumers
 
@@ -25,12 +18,7 @@ npx @acme/zkills info      # links, notes, effective policy
 
 ## Air gap
 
-- `host` per source targets GitHub Enterprise `https://<host>/api/v3`
+- `host` per source targets GitHub Enterprise `https://<host>/api/v3`, trusted through preset
 - `ZKILLS_OFFLINE=1` forbids every network call, cache serves known shas
-- Mirror banks with `type: local` on a synced folder when no API is reachable
-- One tarball, zero dependencies, one file: easy to mirror and to audit
-
-## Upstream updates
-
-- `git fetch upstream && git merge` when you want, never forced
-- Your changes stay in `flavor/` and `package.json`, merges stay trivial
+- Mirror banks with `type: local` on synced folder when no API reachable
+- One tarball, zero dependencies, one file: easy to mirror and audit

@@ -4,7 +4,7 @@ import type { Paths } from "./paths.ts";
 
 export function loadConfig(p: Paths): Promise<Config> {
   return readJson(p.config, Config, () => {
-    throw new Error(`missing ${p.config}, run zkills init`);
+    throw new Error(`missing ${p.config}, run init first`);
   });
 }
 

@@ -15,7 +15,7 @@ export async function fetchGithub(
 ): Promise<Resolved> {
   const api = apiUrl(src.host);
   const pinned = sha ?? (await resolveSha(api, src.repo, src.ref, token));
-  const dir = cachePath(src.repo, pinned);
+  const dir = cachePath(src.host, src.repo, pinned);
   if (await exists(dir)) return { dir, sha: pinned };
   const files = readTarGz(await fetchTarball(api, src.repo, pinned, token), src.path);
   if (files.size === 0)

@@ -5,6 +5,7 @@ import { type GlobalOpts, loadContext } from "./context.ts";
 import { projectChecks } from "./doctor-project.ts";
 import { skillChecks } from "./doctor-skills.ts";
 import { formatFindings, jsonFindings } from "./findings.ts";
+import { tool } from "./intro.ts";
 
 // Everything that can go wrong locally, with the fix in the message
 export async function runDoctor(opts: GlobalOpts): Promise<number> {
@@ -14,7 +15,7 @@ export async function runDoctor(opts: GlobalOpts): Promise<number> {
   else {
     intro(`${ctx.preset.name} doctor`);
     print(formatFindings(ctx.p.root, findings));
-    outro(hasErrors(findings) ? "fix errors, then zkills repair or zkills add" : "healthy");
+    outro(hasErrors(findings) ? `fix errors, then ${tool()} repair or ${tool()} add` : "healthy");
   }
   return hasErrors(findings) ? 1 : 0;
 }

@@ -12,5 +12,5 @@ test("real process: version, help, unknown command exit code", async () => {
   expect(help.stdout).toContain("add [...names]");
   const missing = await execa("node", [CLI, "check", "--cwd", "/nonexistent"], { reject: false });
   expect(missing.exitCode).toBe(1);
-  expect(missing.stderr).toContain("zkills init");
+  expect(missing.stderr).toContain("run init first");
 });

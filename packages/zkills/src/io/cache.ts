@@ -7,12 +7,13 @@ export function cacheRoot(env: Record<string, string | undefined> = process.env)
   return join(base, "zkills");
 }
 
-// One dir per repo@sha, safe path segments
+// One dir per host, owner, name and sha; inputs validated by the config schema
 export function cachePath(
+  host: string,
   repo: string,
   sha: string,
   env?: Record<string, string | undefined>,
 ): string {
-  const safe = repo.replaceAll(/[^\w.-]/g, "_");
-  return join(cacheRoot(env), "github", safe, sha);
+  const safe = (s: string): string => s.replaceAll(/[^\w.-]/g, "_");
+  return join(cacheRoot(env), "github", safe(host), ...repo.split("/").map(safe), sha);
 }

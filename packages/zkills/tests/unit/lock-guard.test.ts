@@ -27,6 +27,7 @@ test("lock refuses escaping keys, paths, files and skillPath", () => {
   expect(lock({ x: { ...entry, files: { "../../evil": "d".repeat(64) } } })).toBe(false);
   expect(lock({ x: { ...entry, files: { "/abs": "d".repeat(64) } } })).toBe(false);
   expect(lock({ x: { ...entry, skillPath: "../skills/x" } })).toBe(false);
+  expect(lock({ x: { ...entry, files: { "..\\..\\evil": "d".repeat(64) } } })).toBe(false);
   expect(lock({ x: { ...entry, renderedHash: "zz" } })).toBe(false);
 });
 

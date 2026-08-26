@@ -23,7 +23,9 @@ try {
     throw new Error(`runtime deps must be bundled, found: ${deps.map(([k]) => k).join(", ")}`);
   if (manifest.includes("catalog:") || manifest.includes("workspace:"))
     throw new Error("unresolved pnpm protocol in manifest");
-  if (pkg.bin?.zkills !== "dist/cli.js")
+  // Forks rename the bin, the target stays dist/cli.js
+  const bins = Object.values(pkg.bin ?? {});
+  if (bins.length !== 1 || bins[0] !== "dist/cli.js")
     throw new Error(`bin missing or wrong: ${JSON.stringify(pkg.bin)}`);
   console.log("packcheck: ok (zero runtime deps, bin present)");
 } finally {

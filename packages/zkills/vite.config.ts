@@ -1,9 +1,12 @@
 import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { defineConfig } from "vite-plus";
 
-// Enterprise forks drop flavor/preset.json at the repo root, baked into dist
-const flavor = join(import.meta.dirname, "../../flavor/preset.json");
+// Enterprise forks commit flavor/preset.json at the repo root, baked into dist
+// ZKILLS_FLAVOR=<file> overrides the path, used by flavorcheck
+const override = process.env["ZKILLS_FLAVOR"] ?? "";
+const flavor =
+  override === "" ? join(import.meta.dirname, "../../flavor/preset.json") : resolve(override);
 const preset = existsSync(flavor) ? JSON.stringify(readFileSync(flavor, "utf8")) : "undefined";
 const pkg = JSON.parse(readFileSync(join(import.meta.dirname, "package.json"), "utf8")) as {
   version: string;

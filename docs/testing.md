@@ -31,7 +31,9 @@ vp run ready      # all of the above + build
 
 - Write allowlist: only `.claude/**`, `zkills.config.json` and the cache change
 - Traversal names rejected on every command and in the lock
-- Atomic swap keeps the old dir when a write fails
+- Atomic swap keeps old dir when write fails
+- Token withheld from untrusted host, `check` fails on unreachable bank
+- Gunzip capped, backslash paths refused, temp JSON removed on failure
 
 ## Env in tests
 

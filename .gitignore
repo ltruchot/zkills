@@ -32,5 +32,5 @@ dist-ssr
 # AI agent worktrees
 .claude/worktrees/
 
-# Enterprise forks commit this file, the white-label repo never does
-flavor/preset.json
+# Pack output, packcheck and release build tarballs in tmp dirs
+*.tgz

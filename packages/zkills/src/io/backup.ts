@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { cp, mkdir, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { swapDir } from "./atomic.ts";
 import { cacheRoot } from "./cache.ts";
 import { exists } from "./fs.ts";
 import { type Paths, skillDir } from "./paths.ts";
@@ -25,15 +26,12 @@ export async function snapshot(p: Paths, name: string): Promise<void> {
   await cp(dir, backup, { recursive: true });
 }
 
-// Put the backup back in place through a work dir
+// Put the backup back in place through the same swap as every other write
 export async function restoreBackup(p: Paths, name: string): Promise<void> {
   const from = backupPath(p, name);
   if (!(await exists(from))) throw new Error(`no backup for ${name}`);
-  const dir = skillDir(p, name);
-  const work = `${dir}.zk-work-${process.pid}`;
-  await rm(work, { recursive: true, force: true });
-  await cp(from, work, { recursive: true });
-  await rm(dir, { recursive: true, force: true });
-  await cp(work, dir, { recursive: true });
-  await rm(work, { recursive: true, force: true });
+  await swapDir(skillDir(p, name), async (work) => {
+    await rm(work, { recursive: true, force: true });
+    await cp(from, work, { recursive: true });
+  });
 }

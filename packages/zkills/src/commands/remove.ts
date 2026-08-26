@@ -8,16 +8,17 @@ import { withSecrets, writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
 import { skillDir } from "../io/paths.ts";
 import { confirmOrYes } from "../io/prompts/confirm.ts";
-import { fail, info, intro, outro, success } from "../io/ui.ts";
+import { fail, info, outro, success } from "../io/ui.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
+import { cmdIntro, tool } from "./intro.ts";
 
 // Managed skills only: backup, dir, lock entry, secrets, gitignore line
 export async function runRemove(names: string[], opts: GlobalOpts): Promise<void> {
-  intro("zkills remove");
+  cmdIntro("remove");
   const ctx = await loadContext(opts);
   if (names.length === 0) fail("name at least one skill");
   for (const name of assertSkillNames(names)) {
-    if (!isManaged(ctx.lock, name)) fail(`${name} is not managed by zkills`);
+    if (!isManaged(ctx.lock, name)) fail(`${name} is not managed by ${tool()}`);
   }
   if (ctx.dryRun) {
     info(`dry run, would remove ${names.join(", ")}`);

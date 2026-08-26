@@ -40,7 +40,7 @@ test("local secrets file is private and sorted", async () => {
 
 test("paths, cache, sha, local bank", async () => {
   expect(findRoot("/nonexistent/deep")).toBe("/nonexistent/deep");
-  expect(cachePath("o/r", "abc", { XDG_CACHE_HOME: "/c" })).toBe("/c/zkills/github/o_r/abc");
+  expect(cachePath("g", "o/r", "s", { XDG_CACHE_HOME: "/c" })).toBe("/c/zkills/github/g/o/r/s");
   expect(isSha("a".repeat(40))).toBe(true);
   expect(isSha("main")).toBe(false);
   const bank = join(import.meta.dirname, "../fixtures/bank-v1");

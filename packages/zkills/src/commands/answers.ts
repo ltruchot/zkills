@@ -3,19 +3,20 @@ import pc from "picocolors";
 import { assertSkillName } from "../core/names.ts";
 import { writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
-import { fail, intro, outro, print } from "../io/ui.ts";
+import { fail, outro, print } from "../io/ui.ts";
 import { editAnswers } from "./answers-edit.ts";
 import { findSkill, loadBanks } from "./banks.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 import { baseSkill } from "./update-base.ts";
 import { knownAnswers } from "./answers-known.ts";
 import { applyUpdate } from "./update-one.ts";
+import { cmdIntro } from "./intro.ts";
 
 type Opts = GlobalOpts & { edit?: boolean };
 
 // Show placeholders, re-prompt and re-render with --edit
 export async function runAnswers(name: string, opts: Opts): Promise<void> {
-  intro("zkills answers");
+  cmdIntro("answers");
   const ctx = await loadContext(opts);
   const entry = ctx.lock.skills[assertSkillName(name)];
   if (entry === undefined) fail(`${name} is not managed`);

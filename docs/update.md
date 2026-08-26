@@ -25,8 +25,8 @@
 
 ## Safety
 
-- Previous dir copied to `~/.cache/zkills/backup/<project>/<name>` before any write
-- Merge applied in a work dir, swapped in with one rename
+- Previous dir copied to `~/.cache/zkills/backup/<project hash>/<name>` before any write
+- Merge applied in work dir, two renames, old dir kept until new in place
 - `zkills repair --from-backup` undoes the last write
 
 ## Lock after update

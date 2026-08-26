@@ -3,7 +3,8 @@ import { MAX_NAME, SKILL_NAME } from "../names.ts";
 
 export const SHA40 = /^[0-9a-f]{40}$/;
 export const SHA256 = /^[0-9a-f]{64}$/;
-const REL = /^(?!\/)(?!.*(^|\/)\.\.(\/|$)).+$/;
+// Relative, no dot-dot segment, no backslash: Windows would read one as a separator
+const REL = /^(?!\/)(?!.*\\)(?!.*(^|\/)\.\.(\/|$)).+$/;
 
 export const SourceType = z.enum(["github", "local"]);
 export const SkillName = z.string().regex(SKILL_NAME).max(MAX_NAME);

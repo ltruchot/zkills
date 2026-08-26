@@ -7,6 +7,7 @@ import { getTemplate } from "../io/template-cache.ts";
 import { warn } from "../io/ui.ts";
 import type { Found } from "./banks.ts";
 import type { Ctx } from "./context.ts";
+import { tokenFor } from "./token-for.ts";
 
 // Template as installed: cache → github at lock sha → none
 export async function baseSkill(
@@ -19,7 +20,7 @@ export async function baseSkill(
   const source = found.bank.source;
   if (source.type === "github") {
     try {
-      const old = await resolveSource(source, await ctx.token(), ctx.p.root, entry.sha);
+      const old = await resolveSource(source, await tokenFor(ctx, source), ctx.p.root, entry.sha);
       return await readSkill(join(old.dir, found.skill.name), found.skill.name);
     } catch (error) {
       warn(`no base at ${entry.sha.slice(0, 7)}: ${(error as Error).message}`);

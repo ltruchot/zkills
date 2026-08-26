@@ -1,7 +1,11 @@
 import type { Placeholder } from "../schema/placeholder.ts";
 
+export const MAX_VALUE = 1024;
+
+// Bank-authored regex on a bounded input, no catastrophic backtracking on long values
 function matchPattern(decl: Placeholder, value: string): string | null {
   if (decl.pattern === undefined) return null;
+  if (value.length > MAX_VALUE) return `over ${MAX_VALUE} chars`;
   return new RegExp(decl.pattern).test(value) ? null : `must match ${decl.pattern}`;
 }
 

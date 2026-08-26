@@ -39,6 +39,6 @@ test("env answers are validated, orphans reported, bad config explained", async 
   const gone = await cli(dir, ["list"]);
   expect(gone.out).toContain("skip");
   const broken = await cli(dir, ["check"], {});
-  expect(broken.code).toBe(0);
+  expect(broken.code).toBe(1);
   await cleanup(dir);
 });

@@ -1,13 +1,13 @@
 import { cac, type CAC } from "cac";
 import { registerAll } from "./commands/index.ts";
-import { resolvePreset, setPreset } from "./commands/preset-store.ts";
+import { getPreset, resolvePreset, setPreset } from "./commands/preset-store.ts";
 import { isZkillsError } from "./core/errors.ts";
 import type { Preset } from "./core/schema/preset.ts";
 import { printErr } from "./io/ui.ts";
 import { VERSION } from "./version.ts";
 
 export function createCli(): CAC {
-  const cli = cac("zkills");
+  const cli = cac(getPreset().name);
   cli.option("--cwd <dir>", "Project dir, default cwd");
   cli.option("-y, --yes", "Skip prompts, fail on missing answers");
   cli.option("--json", "Machine output where supported");

@@ -1,10 +1,11 @@
 import type { CAC } from "cac";
 import pc from "picocolors";
 import { spin } from "../io/spin.ts";
-import { intro, print } from "../io/ui.ts";
+import { print } from "../io/ui.ts";
 import { loadBanks } from "./banks.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
 import { listRows, type Row } from "./list-rows.ts";
+import { cmdIntro } from "./intro.ts";
 
 function color(status: string): string {
   if (status.startsWith("up to date") || status === "available") return pc.green(status);
@@ -27,7 +28,7 @@ export async function runList(opts: GlobalOpts): Promise<void> {
     print([JSON.stringify(rows, null, 2)]);
     return;
   }
-  intro("zkills list");
+  cmdIntro("list");
   print(format(rows));
 }
 

@@ -1,5 +1,7 @@
 # Gotchas
 
+- Release, npm and GitHub frictions: [gotchas-release.md](gotchas-release.md)
+
 ## Shell and files
 
 - Shell cwd resets between commands, always absolute paths, never bare `rm -rf`
@@ -7,6 +9,7 @@
 - Blind string patches fail after oxfmt reformat, rewrite small files whole
 - `vp lint --fix` may rename matchers (`toEqual` → `toStrictEqual`), grep before patching tests
 - An edit script that asserts mid-way ships half the change, grep every expected line before commit
+- `cd dir && cmd` fails when shell already sits in `dir`, later commands still run, absolute paths only
 
 ## Lint and format
 
@@ -23,6 +26,8 @@
 - Vitest swallows `console.log`, CLI prints through `process.stdout.write`
 - e2e call `main()` in-process for real coverage, one spawn test for the bin
 - `ZKILLS_ANSWER_<NAME>` feeds prompts, `XDG_CACHE_HOME` isolates cache
+- Reworded message breaks string asserts, grep tests for old wording first
+- vitest `toThrow` needs message or regex
 
 ## Build
 
@@ -30,19 +35,4 @@
 - Two entries make tsdown split a shared chunk, keep one entry so `dist/cli.js` runs alone
 - Never `require("../package.json")` at runtime, bake values with `define`
 - Runtime deps live in `devDependencies` so tsdown bundles them, `packcheck` enforces zero deps
-
-## npm and release
-
-- Root `devEngines` pins pnpm, npm commands only inside `packages/zkills` or `/tmp`
-- `npm publish` ships `catalog:` versions, always publish a `pnpm pack` tarball
-- `publishConfig.provenance` breaks local publish, provenance comes from trusted publishing in CI only
-- `bin` path without `./`, npm normalizes to `dist/cli.js`
-- Trusted publishing needs an existing package, first version is published by hand
-- A cancelled release may already be on npm, bump the patch version, keep the tag on the published commit
-- WSL: npm web auth needs `BROWSER=wslview`, or `--auth-type=legacy` for a terminal OTP
-- Actions with setup-vp: `pnpm` is not on PATH outside `vp run`, call `vp pm <cmd>`
-
-## YAML and GitHub
-
-- Never a bare `word:` inside an unquoted `name:` value
-- Repo transfer is async, first push after may 403, retry
+- `vp run` task cache ignores env, `ZKILLS_FLAVOR` needs direct `vp pack` in `packages/zkills`

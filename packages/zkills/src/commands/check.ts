@@ -5,22 +5,23 @@ import { STATUS_LABEL, type Status } from "../core/status/buckets.ts";
 import { exitCode } from "../core/status/exit-code.ts";
 import { listDirs } from "../io/dirs.ts";
 import { spin } from "../io/spin.ts";
-import { info, intro, outro, print } from "../io/ui.ts";
+import { info, outro, print } from "../io/ui.ts";
 import { type Bank, loadBanks } from "./banks.ts";
 import { checkOne } from "./check-one.ts";
 import { type GlobalOpts, loadContext } from "./context.ts";
+import { cmdIntro } from "./intro.ts";
 
 type Opts = GlobalOpts & { frozen?: boolean; offline?: boolean };
 
 const paint = (s: Status): string =>
   s === "ok" ? pc.green(STATUS_LABEL[s]) : pc.red(STATUS_LABEL[s]);
 
-// Exit 0 ok, 1 update, 2 drift, 3 tamper
+// Exit 0 ok, 1 update, 2 drift, 3 tamper; an unreachable bank fails, CI never goes green blind
 export async function runCheck(opts: Opts): Promise<number> {
-  intro("zkills check");
+  cmdIntro("check");
   const ctx = await loadContext(opts);
   const banks: Bank[] =
-    opts.offline === true ? [] : await spin("fetch banks", () => loadBanks(ctx, false));
+    opts.offline === true ? [] : await spin("fetch banks", () => loadBanks(ctx));
   const all: Status[] = [];
   const lines: string[] = [];
   for (const name of managedNames(ctx.lock)) {
@@ -42,6 +43,6 @@ export function register(cli: CAC): void {
   cli
     .command("check", "Report skill status, exit code for CI")
     .option("--frozen", "Also verify lock against bank template")
-    .option("--offline", "Skip bank fetch")
+    .option("--offline", "Skip bank fetch, disk and lock only")
     .action(runCheck);
 }

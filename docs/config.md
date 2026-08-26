@@ -7,7 +7,7 @@
   "version": 1,
   "sources": [
     {
-      "repo": "Gods-Academy/skills",
+      "repo": "my-org/skills",
       "ref": "main",
       "path": "skills",
       "type": "github",
@@ -17,7 +17,7 @@
   ],
   "conflict": "inline",
   "policy": {
-    "allowedSources": ["Gods-Academy/skills"],
+    "allowedSources": ["my-org/skills"],
     "denyFrontmatter": ["hooks"],
     "requireAudit": false
   }
@@ -27,9 +27,11 @@
 ## Sources
 
 - `github`: `owner/name`, `ref` branch, tag or sha, resolved to sha at install
-- `host`: `github.com` or a GitHub Enterprise host, API at `https://<host>/api/v3`
+- `host`: `github.com` or GitHub Enterprise hostname, API at `https://<host>/api/v3`
+- Host must be trusted before token leaves laptop, see [auth.md](auth.md)
+- `repo` shape `owner/name`, host shape bare hostname with optional port
 - `local`: path relative to project root, sha = `local:<tree hash>`
-- First bank holding a name wins
+- First bank holding name wins
 
 ## Conflict modes
 

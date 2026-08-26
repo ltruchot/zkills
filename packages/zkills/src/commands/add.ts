@@ -6,10 +6,11 @@ import { writeLocal } from "../io/local.ts";
 import { writeLock } from "../io/lock.ts";
 import { skillDir } from "../io/paths.ts";
 import { spin } from "../io/spin.ts";
-import { fail, intro, outro } from "../io/ui.ts";
+import { fail, outro } from "../io/ui.ts";
 import { addOne } from "./add-one.ts";
 import { findSkill, loadBanks } from "./banks.ts";
 import { type Ctx, type GlobalOpts, loadContext } from "./context.ts";
+import { cmdIntro } from "./intro.ts";
 
 type Opts = GlobalOpts & { force?: boolean };
 
@@ -25,7 +26,7 @@ async function targets(ctx: Ctx, names: string[]): Promise<string[]> {
 }
 
 export async function runAdd(names: string[], opts: Opts): Promise<void> {
-  intro("zkills add");
+  cmdIntro("add");
   const ctx = await loadContext(opts);
   const banks = await spin("fetch banks", () => loadBanks(ctx));
   for (const name of await targets(ctx, names)) {

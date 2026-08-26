@@ -1,6 +1,7 @@
 import type { CAC } from "cac";
+import { tool } from "./intro.ts";
 
-// Shown by `zkills <command> --help`
+// Shown by `zkills <command> --help`, tool name follows the flavor
 const EXAMPLES: Record<string, string[]> = {
   init: [
     "zkills init my-org/skills",
@@ -29,6 +30,7 @@ const EXAMPLES: Record<string, string[]> = {
 
 export function attachExamples(cli: CAC): void {
   for (const command of cli.commands) {
-    for (const example of EXAMPLES[command.name] ?? []) command.example(example);
+    for (const example of EXAMPLES[command.name] ?? [])
+      command.example(example.replaceAll("zkills ", `${tool()} `));
   }
 }

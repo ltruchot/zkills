@@ -11,7 +11,7 @@ export const Placeholder = z
     type: PlaceholderType.default("string"),
     default: z.string().optional(),
     secret: z.boolean().default(false),
-    pattern: z.string().optional(),
+    pattern: z.string().max(200).optional(),
     options: z.array(z.string().min(1)).min(1).optional(),
   })
   .refine((p) => p.type !== "enum" || p.options !== undefined, {

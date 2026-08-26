@@ -16,7 +16,7 @@ test("fetchGithub downloads once, extracts subdir, then serves cache even offlin
   const src = { repo: "o/r", ref: "main", path: "skills", host: "github.com" };
   const first = await fetchGithub(src, "tok");
   expect(first.sha).toBe(SHA);
-  expect(first.dir).toContain(`o_r/${SHA}`);
+  expect(first.dir).toContain(`github.com/o/r/${SHA}`);
   expect(fetchMock).toHaveBeenCalledTimes(2);
   expect(fetchMock.mock.calls[1]?.[0]).toBe(`https://api.github.com/repos/o/r/tarball/${SHA}`);
   const { readTree } = await import("../../src/io/fs.ts");

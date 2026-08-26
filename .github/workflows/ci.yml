@@ -21,3 +21,4 @@ jobs:
       - run: vp run -r test
       - run: vp run -r build
       - run: vp run packcheck
+      - run: vp run flavorcheck

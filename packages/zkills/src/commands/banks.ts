@@ -5,6 +5,7 @@ import { resolveSource } from "../io/source.ts";
 import type { Resolved } from "../io/source-local.ts";
 import { warn } from "../io/ui.ts";
 import type { Ctx } from "./context.ts";
+import { tokenFor } from "./token-for.ts";
 
 export type Bank = { source: Source; resolved: Resolved; skills: Skill[] };
 export type Found = { bank: Bank; skill: Skill };
@@ -14,8 +15,7 @@ export async function loadBanks(ctx: Ctx, strict = true): Promise<Bank[]> {
   const banks: Bank[] = [];
   for (const source of ctx.config.sources) {
     try {
-      const token = source.type === "github" ? await ctx.token() : null;
-      const resolved = await resolveSource(source, token, ctx.p.root);
+      const resolved = await resolveSource(source, await tokenFor(ctx, source), ctx.p.root);
       banks.push({ source, resolved, skills: await readBank(resolved.dir) });
     } catch (error) {
       if (strict) throw error;

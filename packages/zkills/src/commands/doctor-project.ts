@@ -7,6 +7,7 @@ import { listDirs } from "../io/dirs.ts";
 import { exists } from "../io/fs.ts";
 import { isOffline } from "../io/net.ts";
 import type { Ctx } from "./context.ts";
+import { tool } from "./intro.ts";
 
 export const finding = (rule: string, level: Finding["level"], msg: string): Finding => ({
   rule,
@@ -28,7 +29,7 @@ export async function projectChecks(ctx: Ctx): Promise<Finding[]> {
     );
   }
   for (const dir of unmanagedDirs(ctx.lock, await listDirs(ctx.p.skills))) {
-    out.push(finding("unmanaged", "warn", `${dir} is hand-written, zkills never touches it`));
+    out.push(finding("unmanaged", "warn", `${dir} is hand-written, ${tool()} never touches it`));
   }
   for (const name of managedNames(ctx.lock)) {
     if (await exists(join(homedir(), ".claude", "skills", name))) {

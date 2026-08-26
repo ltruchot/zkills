@@ -1,9 +1,7 @@
 import { SHA40 } from "../core/schema/lock.ts";
 import { assertOnline } from "./net.ts";
 
-export function isSha(ref: string): boolean {
-  return SHA40.test(ref);
-}
+export const isSha = (ref: string): boolean => SHA40.test(ref);
 
 function headers(token: string | null, accept: string): Record<string, string> {
   const out: Record<string, string> = { Accept: accept };
@@ -30,8 +28,10 @@ export async function resolveSha(
 }
 
 export const MAX_TARBALL = 50 * 1024 * 1024;
+// GitHub answers 415 to an unknown Accept, octet-stream included
+export const JSON_ACCEPT = "application/vnd.github+json";
 
-// Repo tarball at a sha, capped at 50 MiB
+// Repo tarball at a sha, codeload redirect followed, capped at 50 MiB
 export async function fetchTarball(
   api: string,
   repo: string,
@@ -40,7 +40,7 @@ export async function fetchTarball(
 ): Promise<Buffer> {
   assertOnline("downloading a bank");
   const res = await fetch(`${api}/repos/${repo}/tarball/${sha}`, {
-    headers: headers(token, "application/octet-stream"),
+    headers: headers(token, JSON_ACCEPT),
   });
   if (!res.ok) throw new Error(`github ${res.status} downloading ${repo}@${sha.slice(0, 7)}`);
   const bytes = Buffer.from(await res.arrayBuffer());

@@ -28,6 +28,7 @@
 - `ZKILLS_ANSWER_<NAME>` feeds prompts, `XDG_CACHE_HOME` isolates cache
 - Reworded message breaks string asserts, grep tests for old wording first
 - vitest `toThrow` needs message or regex
+- Mocked `fetch` ignoring headers hides real API errors, assert headers and mimic status codes
 
 ## Build
 

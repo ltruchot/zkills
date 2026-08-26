@@ -4,7 +4,7 @@
 - Skill = folder with `SKILL.md`, Claude Code loads it from `.claude/skills/`
 - Bank = GitHub repo `my-org/skills` holding `skills/<name>/`, reviewed like code
 - Placeholders `{{TEAM}}` asked once per project, update = 3-way merge, local edits survive
-- Zero telemetry, zero dependencies, one file, MIT, forkable as internal enterprise tool
+- Zero telemetry, zero dependencies, one file, public domain, forkable as internal enterprise tool
 
 ## Prerequisites
 

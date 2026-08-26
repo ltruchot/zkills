@@ -1,10 +1,10 @@
 {
   "name": "zkills",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Claude-only skills manager for private org banks, placeholders and drift-safe updates",
   "homepage": "https://github.com/ltruchot/zkills#readme",
   "bugs": "https://github.com/ltruchot/zkills/issues",
-  "license": "MIT",
+  "license": "Unlicense",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ltruchot/zkills.git"

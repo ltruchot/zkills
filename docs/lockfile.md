@@ -15,7 +15,7 @@
       "secrets": ["PROD_TOKEN"],
       "sha": "<40 hex commit>",
       "skillPath": "skills/qa-pr",
-      "source": "Gods-Academy/skills",
+      "source": "acme/skills",
       "sourceType": "github",
       "templateHash": "<sha256>"
     }

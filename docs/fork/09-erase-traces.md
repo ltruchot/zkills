@@ -13,16 +13,16 @@
 - `packages/zkills/README.md`: package page on GitHub Packages
 - `packages/zkills/package.json`: `homepage`, `bugs`, `repository` internal
 - `CLAUDE.md`: internal repos line
-- `LICENSE.md`: keep MIT text and original copyright line, company line added above, license requires it
+- `LICENSE.md`: replace freely, Unlicense is public domain, no attribution, no upstream name to keep
 - `docs/install.md`, `docs/security.md`: internal registry, no public npm mention
 
 ## Grep
 
 ```bash
-grep -rn "ltruchot\|Gods-Academy\|npmjs\|public npm" --include='*.md' --include='*.json' . | grep -v node_modules
+grep -rn "ltruchot\|npmjs\|public npm" --include='*.md' --include='*.json' . | grep -v node_modules
 ```
 
-- Zero hits outside `LICENSE.md` before first rollout
+- Zero hits before first rollout
 - Technical docs stay, no upstream reference inside
 
 ## Keep private

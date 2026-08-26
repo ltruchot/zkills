@@ -12,4 +12,4 @@ npx zkills check --frozen   # CI: 0 ok, 1 update, 2 drift, 3 tamper
 ```
 
 - Docs: https://github.com/ltruchot/zkills#readme
-- License MIT
+- License Unlicense, public domain

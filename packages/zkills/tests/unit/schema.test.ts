@@ -24,9 +24,9 @@ test("duplicate and lowercase names fail", () => {
 });
 
 test("default config", () => {
-  const c = defaultConfig("Gods-Academy/skills");
+  const c = defaultConfig("acme/skills");
   expect(c.sources[0]).toStrictEqual({
-    repo: "Gods-Academy/skills",
+    repo: "acme/skills",
     ref: "main",
     path: "skills",
     type: "github",

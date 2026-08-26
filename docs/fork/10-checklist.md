@@ -29,5 +29,5 @@
 
 ## Traces
 
-- [ ] Grep for upstream names returns only `LICENSE.md`
+- [ ] Grep for upstream names returns zero hits
 - [ ] Fork docs deleted from repo, kept outside

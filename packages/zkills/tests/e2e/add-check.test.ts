@@ -20,12 +20,12 @@ test("init, add, check, list, drift, remove", async () => {
   expect((await cli(dir, ["add", "hello", "-y"], ANSWERS)).code).toBe(0);
   const skill = await readFile(join(dir, ".claude/skills/hello/SKILL.md"), "utf8");
   expect(skill).toContain("Project: Acme");
-  expect(skill).toContain("Repo: Gods-Academy/example");
+  expect(skill).toContain("Repo: acme/example");
   expect(skill).toContain("{{NOT_DECLARED}}");
   expect(skill).toContain("$ARGUMENTS");
   const entry = (await readLockFile(lockPath)).skills["hello"];
   expect(entry?.answers).toStrictEqual({
-    GITHUB_REPO: "Gods-Academy/example",
+    GITHUB_REPO: "acme/example",
     PROJECT_NAME: "Acme",
   });
   expect(entry?.sha).toMatch(/^local:/);

@@ -10,7 +10,7 @@ const env = { ZKILLS_ANSWER_VAULT_URL: "https://v.test", ZKILLS_ANSWER_TOKEN: "t
 test("policy blocks sources and frontmatter keys", async () => {
   const dir = await project("bank-secret");
   expect((await cli(dir, ["init", "-y"])).code).toBe(0);
-  await setBank(dir, "bank-secret", { policy: { allowedSources: ["Gods-Academy/skills"] } });
+  await setBank(dir, "bank-secret", { policy: { allowedSources: ["acme/skills"] } });
   const blocked = await cli(dir, ["add", "vault", "-y"], env);
   expect(blocked.code).toBe(1);
   expect(blocked.out).toContain("allowedSources");

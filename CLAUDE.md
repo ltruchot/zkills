@@ -29,7 +29,7 @@ release. Add a tool name to select part of the graph. For example, run
 # zkills
 
 - Claude-only skills manager for private org banks
-- Two repos: this CLI (`ltruchot/zkills`, npm `zkills`), reference bank `Gods-Academy/skills`
+- One repo: this CLI (`ltruchot/zkills`, npm `zkills`), banks are any private GitHub repo, `acme/skills` in docs
 - Frictions already met, read before lint, release or shell work: @docs/gotchas.md @docs/gotchas-release.md
 
 ## Rules

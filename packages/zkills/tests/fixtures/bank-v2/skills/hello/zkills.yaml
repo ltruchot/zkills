@@ -5,7 +5,7 @@ placeholders:
   - name: GITHUB_REPO
     prompt: GitHub repo owner/name
     pattern: "^[\\w.-]+/[\\w.-]+$"
-    default: Gods-Academy/example
+    default: acme/example
   - name: TEAM
     prompt: Team name
     type: enum

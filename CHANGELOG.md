@@ -2,6 +2,11 @@
 
 - Newest first, version = git tag `v<version>`
 
+## 0.3.4
+
+- License: Unlicense, public domain, forks may rebrand, relicense and sell, no attribution
+- Docs: example bank is `acme/skills`, no unrelated org name left in repo
+
 ## 0.3.3
 
 - Fix: github tarball download, `Accept: application/octet-stream` returned 415 since 0.2.0

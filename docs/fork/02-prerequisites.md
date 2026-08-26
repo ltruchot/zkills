@@ -18,9 +18,11 @@
 git clone https://github.com/ltruchot/zkills.git skills-cli
 cd skills-cli
 vp install
-vp run ready      # check, lines, test, build, packcheck, flavorcheck
+vp check && vp run lines && vp run -r test && vp run -r build && vp run packcheck && vp run flavorcheck
 ```
 
+- First run right after `vp install` can fail `EBUSY` on tsgolint, run it twice
+- Never `vp run ready`, nesting `vp check` in `vp run` breaks type-aware lint
 - Everything green before any change, else fix environment first
 - WSL: [../gotchas.md](../gotchas.md), [../gotchas-release.md](../gotchas-release.md)
 

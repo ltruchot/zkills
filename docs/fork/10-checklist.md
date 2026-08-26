@@ -10,7 +10,7 @@
 
 - [ ] `flavor/preset.json` committed: name, sources, policy, links, notes
 - [ ] `package.json`: name, bin, publishConfig, internal URLs, version
-- [ ] `vp run ready` green
+- [ ] gate chain green, `vp check && vp run lines && vp run -r test && ...`
 - [ ] `node dist/cli.js --help` shows `acme-skills`
 - [ ] `release.yml` publishes to GitHub Packages with `GITHUB_TOKEN`
 - [ ] Tag pushed, package visible, Actions access granted to bank and consumer repos

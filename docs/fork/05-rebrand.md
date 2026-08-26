@@ -27,7 +27,7 @@ cp flavor/preset.example.json flavor/preset.json
 ## Prove
 
 ```bash
-vp run ready
+vp check && vp run lines && vp run -r test && vp run -r build && vp run packcheck && vp run flavorcheck
 cd packages/zkills && vp pack && node dist/cli.js --help   # acme-skills in Usage
 node dist/cli.js info --cwd /tmp                           # baked sources, links
 ```

@@ -14,6 +14,7 @@
 ## Lint and format
 
 - CI runs `vp check` without `--fix`, run that form before every push
+- `vp run ready` nests `vp check` in `vp run`, tsgolint spawns EBUSY, run gates as a shell chain
 - `vp check --fix` hides rules that flip with oxfmt, e.g. `number-literal-case`
 - `vp run lines` after `vp check --fix`, reformat adds lines
 - Pre-commit hook runs `vp check --fix` then `vp run lines`, `packcheck` is on you before push

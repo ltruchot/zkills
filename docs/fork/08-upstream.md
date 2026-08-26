@@ -10,7 +10,8 @@
 ```bash
 git fetch upstream
 git merge upstream/main
-vp install && vp run ready
+vp install
+vp check && vp run lines && vp run -r test && vp run -r build && vp run packcheck && vp run flavorcheck
 ```
 
 - Conflicts expected in `README.md`, `packages/zkills/package.json`, `release.yml`, docs

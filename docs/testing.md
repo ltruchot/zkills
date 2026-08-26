@@ -7,7 +7,8 @@ vp check          # fmt, lint, types
 vp run lines      # 50-line law
 vp run -r test    # unit + e2e
 vp test --coverage # inside packages/zkills
-vp run ready      # all of the above + build
+# all gates, one shell chain; vp run ready nests vp check and breaks lint
+vp check && vp run lines && vp run -r test && vp run -r build && vp run packcheck && vp run flavorcheck
 ```
 
 ## Layout

@@ -3,7 +3,7 @@
 ## Setup
 
 - Node 22.18+, `npm i -g vite-plus`, `vp install`
-- `vp run ready` green before first change
+- Gate chain green before first change, see [Testing](docs/testing.md)
 
 ## Rules
 

@@ -33,7 +33,8 @@ git tag v0.3.3 && git push origin v0.3.3
 
 - Actions → release job green
 - Package under org → Packages, linked to `acme/skills-cli`
-- Package settings → Manage Actions access → add `acme/skills` and consumer repos, read
+- Package → Settings → Manage Actions access → Add repository → `acme/skills` + consumer repos, Read
+- UI only, no API; without it CI gets `403 permission_denied: read_package`
 
 ## Verify
 

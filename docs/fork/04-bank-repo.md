@@ -36,6 +36,8 @@ jobs:
 ```
 
 - Pin version, bump on purpose
+- Grant the package Actions access to the bank repo first, see [06-release.md](06-release.md)
+- Never apply the CLI 50-line rule to `skills/**`, the contract allows 500
 - Package settings → Manage Actions access → add `acme/skills`, else `GITHUB_TOKEN` cannot read package
 
 ## Authoring loop

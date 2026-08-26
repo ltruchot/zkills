@@ -3,14 +3,15 @@
 ## Laptop setup, once per engineer
 
 ```bash
-gh auth login
-echo "@acme:registry=https://npm.pkg.github.com" >> ~/.npmrc
-echo "//npm.pkg.github.com/:_authToken=$(gh auth token)" >> ~/.npmrc
+gh auth refresh -s read:packages          # `repo` alone is not enough
+printf '@acme:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${NPM_TOKEN}\n' >> ~/.npmrc
+echo 'export NPM_TOKEN=$(gh auth token)' >> ~/.zshrc   # or .bashrc
 npx @acme/skills-cli --version
 ```
 
-- `gh` token needs `read:packages` and `repo`, `gh auth refresh -s read:packages` when missing
-- Classic PAT with same scopes works too
+- npm expands `${NPM_TOKEN}` at read time, no token written to disk
+- Without `read:packages`: `403 permission_denied: token does not match expected scopes`
+- Classic PAT with `read:packages` and `repo` works too
 - GitHub Enterprise bank: nothing more, preset host trusted
 
 ## First project

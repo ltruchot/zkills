@@ -4,6 +4,7 @@
 
 ## 0.3.3
 
+- Fix: github tarball download, `Accept: application/octet-stream` returned 415 since 0.2.0
 - Security: token sent to trusted hosts only, `ZKILLS_HOSTS`
 - Security: repo and host shapes validated, cache keyed by host
 - Security: gunzip output capped, backslash paths refused, temp JSON removed on failure

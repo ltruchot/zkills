@@ -1,5 +1,10 @@
 # zkills
 
+> **Merged into [qol-mini](https://github.com/ltruchot/claude-code-qol-mini).** Repository archived, package deprecated.
+> Skills per project: `pnpm dlx qol-mini skills install <name> <project>`.
+> No migration: reinstall each skill with `--replace`, then delete
+> `zkills.config.json` and `.claude/zkills.lock.json`.
+
 - Package manager for Claude Code skills: reviewed `SKILL.md` folders from private GitHub repo into any project
 - Skill = folder with `SKILL.md`, Claude Code loads it from `.claude/skills/`
 - Bank = GitHub repo `my-org/skills` holding `skills/<name>/`, reviewed like code
@@ -39,10 +44,6 @@ npx zkills check --frozen       # CI: 0 ok, 1 update, 2 drift, 3 tamper
 npx zkills remove hello         # backup, dir, lock entry, secrets
 npx zkills doctor               # what is wrong, how to fix
 ```
-
-## Enterprise
-
-- Fork, commit `flavor/preset.json`, own registry, consumers see internal tool: [docs/fork/README.md](docs/fork/README.md)
 
 ## Docs
 
